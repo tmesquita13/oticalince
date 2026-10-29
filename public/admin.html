@@ -1,0 +1,2063 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel de Gestão - Ótica Lince (Admin)</title>
+  <meta name="robots" content="noindex, nofollow">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/images/logo.png">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'lince-red': '#8B1118',
+            'lince-red-dark': '#5a090e',
+            'lince-red-light': '#a81c24',
+            'lince-gold': '#c59b27',
+            'lince-gold-light': '#e5b948',
+            'lince-dark': '#0f172a',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased font-['Plus_Jakarta_Sans',sans-serif]">
+
+  <!-- ========================================================
+       TELA DE LOGIN ADMINISTRATIVO (USUÁRIO: admin / SENHA: admin)
+       ======================================================== -->
+  <div id="adminLoginScreen" class="min-h-screen flex items-center justify-center p-4 sm:p-6 bg-gradient-to-br from-slate-950 via-slate-900 to-red-950 relative overflow-hidden">
+    
+    <!-- Efeitos Decorativos de Fundo -->
+    <div class="absolute -top-40 -right-40 w-96 h-96 bg-lince-red/20 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="relative w-full max-w-md bg-white rounded-3xl shadow-2xl border border-white/20 overflow-hidden">
+      
+      <!-- Topo com Logo e Identidade Visual -->
+      <div class="bg-gradient-to-br from-lince-red-dark via-lince-red to-red-900 p-8 text-center text-white relative">
+        <div class="w-20 h-20 bg-white p-2.5 rounded-2xl shadow-xl mx-auto mb-4 border-2 border-amber-400 flex items-center justify-center">
+          <img src="/images/logo.png" alt="Ótica Lince" class="w-full h-full object-contain">
+        </div>
+        <h2 class="text-2xl font-black font-serif-lince uppercase tracking-wider">Ótica Lince</h2>
+        <div class="inline-block mt-1 px-3 py-0.5 rounded-full bg-amber-400 text-slate-900 font-bold text-[10px] tracking-widest uppercase">
+          Painel de Gestão Exclusivo
+        </div>
+        <p class="text-xs text-red-100 mt-2 opacity-90">
+          Acesso restrito para a proprietária e equipe óptica
+        </p>
+      </div>
+
+      <!-- Formulário de Autenticação -->
+      <div class="p-6 sm:p-8">
+        
+        <!-- Mensagem de Erro (Oculta por padrão) -->
+        <div id="loginErrorMessage" class="hidden mb-4 p-3 bg-red-50 border border-red-200 rounded-xl text-xs text-red-700 flex items-center gap-2.5">
+          <i class="fa-solid fa-triangle-exclamation text-red-600 text-sm shrink-0"></i>
+          <span id="loginErrorText">Usuário ou senha incorretos.</span>
+        </div>
+
+        <form id="adminLoginForm" class="space-y-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Usuário de Acesso</label>
+            <div class="relative">
+              <i class="fa-solid fa-user absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+              <input 
+                type="text" 
+                id="adminUsername" 
+                required 
+                placeholder="admin" 
+                value="admin"
+                class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-lince-red focus:bg-white transition font-medium"
+              >
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">Senha Secreta</label>
+            <div class="relative">
+              <i class="fa-solid fa-lock absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+              <input 
+                type="password" 
+                id="adminPassword" 
+                required 
+                placeholder="admin" 
+                value="admin"
+                class="w-full pl-10 pr-11 py-3 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-lince-red focus:bg-white transition font-medium"
+              >
+              <button 
+                type="button" 
+                id="btnTogglePassword" 
+                class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 text-sm p-1"
+                title="Mostrar/Ocultar Senha"
+              >
+                <i class="fa-solid fa-eye" id="togglePasswordIcon"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between text-xs pt-1">
+            <label class="flex items-center gap-2 cursor-pointer text-slate-600 font-medium select-none">
+              <input type="checkbox" id="rememberMe" checked class="w-4 h-4 text-lince-red rounded focus:ring-0">
+              <span>Lembrar login</span>
+            </label>
+            <button type="button" onclick="Admin.fillDefaultCredentials()" class="text-lince-red font-bold hover:underline text-[11px]">
+              Preencher admin/admin
+            </button>
+          </div>
+
+          <button 
+            type="submit" 
+            id="btnLoginSubmit" 
+            class="w-full py-3.5 px-4 bg-lince-red hover:bg-red-800 text-white font-bold rounded-xl text-xs sm:text-sm uppercase tracking-wider transition shadow-lg flex items-center justify-center gap-2 mt-2"
+          >
+            <i class="fa-solid fa-right-to-bracket text-base"></i>
+            <span>Entrar no Painel</span>
+          </button>
+        </form>
+
+        <!-- Dica de Acesso e Voltar para a Loja -->
+        <div class="mt-6 pt-5 border-t border-slate-100 flex flex-col gap-3 text-center">
+          <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200/80 text-[11px] text-slate-600">
+            <span class="font-bold text-slate-800">Credenciais Oficiais:</span> Usuário: <code class="font-bold text-lince-red">admin</code> | Senha: <code class="font-bold text-lince-red">admin</code>
+          </div>
+
+          <a href="/" class="text-xs text-slate-500 hover:text-lince-red font-semibold transition flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-arrow-left text-[10px]"></i>
+            <span>Voltar para a Loja / Vitrine</span>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       PAINEL ADMINISTRATIVO PRINCIPAL (EXIBIDO APÓS O LOGIN)
+       ======================================================== -->
+  <div id="adminMainLayout" class="min-h-screen flex flex-col lg:flex-row hidden">
+    
+    <!-- ========================================================
+         SIDEBAR / NAVEGAÇÃO LATERAL (ADMIN)
+         ======================================================== -->
+    <aside class="w-full lg:w-72 bg-slate-900 text-white flex flex-col justify-between shrink-0 border-r border-slate-800 z-30">
+      <div>
+        <!-- Logo e Cabeçalho Sidebar -->
+        <div class="p-6 border-b border-slate-800 flex items-center justify-between">
+          <a href="/admin" class="flex items-center gap-3">
+            <div class="h-11 w-11 bg-lince-red p-1 rounded-xl shadow-lg flex items-center justify-center border border-red-800 shrink-0">
+              <img src="/images/logo.png" alt="Ótica Lince" class="h-9 w-auto object-contain">
+            </div>
+            <div>
+              <div class="font-extrabold text-base tracking-wider uppercase text-white font-serif-lince leading-tight">
+                ÓTICA LINCE
+              </div>
+              <div class="text-[10px] tracking-widest text-amber-400 font-bold uppercase">
+                Painel Administrativo
+              </div>
+            </div>
+          </a>
+
+          <!-- Botão Menu Mobile -->
+          <button id="adminMobileToggle" class="lg:hidden text-slate-400 hover:text-white p-2">
+            <i class="fa-solid fa-bars text-xl"></i>
+          </button>
+        </div>
+
+        <!-- Links de Navegação do Painel -->
+        <nav id="adminNavMenu" class="hidden lg:block p-4 space-y-1.5 text-xs font-bold">
+          
+          <div class="text-[10px] uppercase tracking-wider text-slate-400 px-3 py-2 font-extrabold">
+            Visão Geral
+          </div>
+          
+          <button data-nav-tab="dashboard" class="admin-nav-item w-full flex items-center gap-3 px-3.5 py-3 rounded-xl transition text-left active bg-lince-red text-white shadow-sm">
+            <i class="fa-solid fa-chart-pie text-base w-5 text-center"></i>
+            <span>Dashboard & Métricas</span>
+          </button>
+
+          <div class="text-[10px] uppercase tracking-wider text-slate-400 px-3 pt-4 pb-2 font-extrabold">
+            Gestão & Atendimento
+          </div>
+
+          <button data-nav-tab="clients" class="admin-nav-item w-full flex items-center gap-3 px-3.5 py-3 rounded-xl transition text-left text-slate-300 hover:bg-slate-800 hover:text-white">
+            <i class="fa-solid fa-users text-base w-5 text-center text-red-400"></i>
+            <span>Clientes & Prontuários</span>
+          </button>
+
+          <button data-nav-tab="prescriptions" class="admin-nav-item w-full flex items-center gap-3 px-3.5 py-3 rounded-xl transition text-left text-slate-300 hover:bg-slate-800 hover:text-white">
+            <i class="fa-solid fa-file-prescription text-base w-5 text-center text-blue-400"></i>
+            <span>Receitas Oftalmológicas</span>
+          </button>
+
+          <div class="text-[10px] uppercase tracking-wider text-slate-400 px-3 pt-4 pb-2 font-extrabold">
+            Catálogo & Ordens de Serviço
+          </div>
+
+          <button data-nav-tab="products" class="admin-nav-item w-full flex items-center gap-3 px-3.5 py-3 rounded-xl transition text-left text-slate-300 hover:bg-slate-800 hover:text-white">
+            <i class="fa-solid fa-boxes-stacked text-base w-5 text-center text-amber-400"></i>
+            <span>Estoque & Produtos</span>
+          </button>
+
+          <button data-nav-tab="quotes" class="admin-nav-item w-full flex items-center gap-3 px-3.5 py-3 rounded-xl transition text-left text-slate-300 hover:bg-slate-800 hover:text-white">
+            <i class="fa-solid fa-receipt text-base w-5 text-center text-purple-400"></i>
+            <span>Orçamentos & O.S. Online</span>
+          </button>
+
+          <div class="text-[10px] uppercase tracking-wider text-slate-400 px-3 pt-4 pb-2 font-extrabold">
+            Simulador & Orçamentos
+          </div>
+
+          <button data-nav-tab="simulator" class="admin-nav-item w-full flex items-center gap-3 px-3.5 py-3 rounded-xl transition text-left text-slate-300 hover:bg-slate-800 hover:text-white">
+            <i class="fa-solid fa-sliders text-base w-5 text-center text-emerald-400"></i>
+            <span>Editar Simulador & Preços</span>
+          </button>
+
+          <!-- SEÇÃO: PERSONALIZAÇÃO DO SITE -->
+          <div class="text-[10px] uppercase tracking-wider text-slate-400 px-3 pt-4 pb-2 font-extrabold flex items-center justify-between">
+            <span>Personalização do Site</span>
+            <span class="text-[9px] bg-pink-900/60 text-pink-300 px-1.5 py-0.5 rounded font-mono">6 Tópicos</span>
+          </div>
+
+          <button data-nav-tab="cms_identity" class="admin-nav-item w-full flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl transition text-left text-slate-300 hover:bg-slate-800 hover:text-white text-xs">
+            <i class="fa-solid fa-building-columns text-sm w-5 text-center text-red-400"></i>
+            <span>1. Identidade & Contatos</span>
+          </button>
+
+          <button data-nav-tab="cms_topbar" class="admin-nav-item w-full flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl transition text-left text-slate-300 hover:bg-slate-800 hover:text-white text-xs">
+            <i class="fa-solid fa-bullhorn text-sm w-5 text-center text-amber-400"></i>
+            <span>2. Barra Superior (Topo)</span>
+          </button>
+
+          <button data-nav-tab="cms_hero" class="admin-nav-item w-full flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl transition text-left text-slate-300 hover:bg-slate-800 hover:text-white text-xs">
+            <i class="fa-solid fa-wand-magic-sparkles text-sm w-5 text-center text-purple-400"></i>
+            <span>3. Banner Principal (Hero)</span>
+          </button>
+
+          <button data-nav-tab="cms_featured" class="admin-nav-item w-full flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl transition text-left text-slate-300 hover:bg-slate-800 hover:text-white text-xs">
+            <i class="fa-solid fa-glasses text-sm w-5 text-center text-emerald-400"></i>
+            <span>4. Armação em Destaque</span>
+          </button>
+
+          <button data-nav-tab="cms_services" class="admin-nav-item w-full flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl transition text-left text-slate-300 hover:bg-slate-800 hover:text-white text-xs">
+            <i class="fa-solid fa-microscope text-sm w-5 text-center text-blue-400"></i>
+            <span>5. Serviços Especializados</span>
+          </button>
+
+          <button data-nav-tab="cms_footer" class="admin-nav-item w-full flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl transition text-left text-slate-300 hover:bg-slate-800 hover:text-white text-xs">
+            <i class="fa-solid fa-file-contract text-sm w-5 text-center text-teal-400"></i>
+            <span>6. Rodapé & Textos Legais</span>
+          </button>
+        </nav>
+      </div>
+
+      <!-- Rodapé Sidebar -->
+      <div class="p-4 border-t border-slate-800 hidden lg:block">
+        <a href="/" target="_blank" class="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl transition">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          <span>Abrir Loja / Vitrine</span>
+        </a>
+
+        <button onclick="Admin.openMobileAccessModal()" class="w-full flex items-center justify-center gap-2 py-2 px-3 mt-2 bg-slate-800/80 hover:bg-slate-700 text-amber-300 text-xs font-bold rounded-xl transition">
+          <i class="fa-solid fa-qrcode"></i>
+          <span>QR Code para Celular</span>
+        </button>
+
+        <div class="flex items-center gap-3 mt-4 pt-4 border-t border-slate-800 text-xs">
+          <div class="w-8 h-8 rounded-full bg-lince-red text-white flex items-center justify-center font-bold shrink-0">
+            <i class="fa-solid fa-user-shield text-xs"></i>
+          </div>
+          <div class="overflow-hidden flex-1">
+            <div class="font-bold text-white truncate" id="adminUserDisplayName">Gerência Ótica Lince</div>
+            <div class="text-[11px] text-emerald-400 flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Conectado (admin)
+            </div>
+          </div>
+          <button onclick="Admin.logout()" class="p-2 text-slate-400 hover:text-red-400 hover:bg-slate-800 rounded-lg transition" title="Sair do Painel">
+            <i class="fa-solid fa-arrow-right-from-bracket text-sm"></i>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ========================================================
+         CONTEÚDO PRINCIPAL (HEADER TOP + VIEWS)
+         ======================================================== -->
+    <main class="flex-1 flex flex-col min-w-0 bg-slate-50">
+      
+      <!-- Topbar Administrativa -->
+      <header class="bg-white border-b border-slate-200 sticky top-0 z-20 px-6 py-4 flex items-center justify-between gap-4">
+        
+        <div>
+          <h1 id="adminViewTitle" class="text-xl font-black text-slate-900 font-serif-lince">
+            Dashboard & Visão Geral
+          </h1>
+          <p id="adminViewSubtitle" class="text-xs text-slate-500">
+            Métricas em tempo real, atendimentos e movimentações da Ótica Lince
+          </p>
+        </div>
+
+        <!-- Botões de Ação Rápida Topbar -->
+        <div class="flex items-center gap-3">
+          <button onclick="Admin.openModal('newClientModal')" class="hidden sm:inline-flex items-center gap-2 px-3.5 py-2 bg-lince-red hover:bg-red-800 text-white rounded-xl text-xs font-bold shadow-xs transition">
+            <i class="fa-solid fa-user-plus"></i>
+            <span>+ Novo Cliente</span>
+          </button>
+
+          <button onclick="Admin.openModal('newPrescriptionModal')" class="hidden md:inline-flex items-center gap-2 px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold shadow-xs transition">
+            <i class="fa-solid fa-file-prescription"></i>
+            <span>+ Receita Médica</span>
+          </button>
+
+          <button onclick="Admin.openModal('newProductModal')" class="hidden sm:inline-flex items-center gap-2 px-3.5 py-2 bg-slate-800 hover:bg-black text-white rounded-xl text-xs font-bold shadow-xs transition">
+            <i class="fa-solid fa-plus"></i>
+            <span>+ Produto</span>
+          </button>
+
+          <button onclick="Admin.openMobileAccessModal()" class="inline-flex items-center gap-1.5 px-3 py-2 bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 rounded-xl text-xs font-bold shadow-xs transition" title="Acessar no Celular">
+            <i class="fa-solid fa-mobile-screen-button text-amber-600"></i>
+            <span class="hidden md:inline">Ver no Celular</span>
+          </button>
+
+          <a href="/" target="_blank" class="p-2 text-slate-500 hover:text-lince-red hover:bg-slate-100 rounded-xl transition" title="Ir para o site da loja">
+            <i class="fa-solid fa-store text-lg"></i>
+          </a>
+
+          <button onclick="Admin.logout()" class="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-100 hover:bg-red-50 text-slate-700 hover:text-red-700 rounded-xl text-xs font-bold transition shadow-xs" title="Sair do Painel">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            <span class="hidden sm:inline">Sair</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- ÁREA DE CONTEÚDO DINÂMICO -->
+      <div class="p-6 sm:p-8 flex-1 overflow-y-auto space-y-8">
+
+        <!-- ====================================================
+             1. VIEW: DASHBOARD & VISÃO GERAL
+             ==================================================== -->
+        <div id="view_dashboard" class="admin-view space-y-8">
+          
+          <!-- CARDS DE MÉTRICAS / KPIS -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            
+            <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+              <div>
+                <span class="text-xs font-semibold text-slate-400 block mb-1">Clientes Cadastrados</span>
+                <div id="dashTotalClients" class="text-3xl font-black text-slate-900">--</div>
+                <span class="text-[11px] text-emerald-600 font-bold mt-1 inline-flex items-center gap-1">
+                  <i class="fa-solid fa-user-check"></i> Base ativa no sistema
+                </span>
+              </div>
+              <div class="w-14 h-14 bg-red-50 text-lince-red rounded-2xl flex items-center justify-center text-2xl shadow-xs">
+                <i class="fa-solid fa-users"></i>
+              </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+              <div>
+                <span class="text-xs font-semibold text-slate-400 block mb-1">Produtos no Catálogo</span>
+                <div id="dashTotalProducts" class="text-3xl font-black text-slate-900">--</div>
+                <span class="text-[11px] text-slate-500 font-medium mt-1 inline-block">
+                  Armações, lentes & acessórios
+                </span>
+              </div>
+              <div class="w-14 h-14 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center text-2xl shadow-xs">
+                <i class="fa-solid fa-glasses"></i>
+              </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+              <div>
+                <span class="text-xs font-semibold text-slate-400 block mb-1">Receitas Oftalmológicas</span>
+                <div id="dashTotalPrescriptions" class="text-3xl font-black text-slate-900">--</div>
+                <span class="text-[11px] text-blue-600 font-bold mt-1 inline-flex items-center gap-1">
+                  <i class="fa-solid fa-notes-medical"></i> Prontuários salvos
+                </span>
+              </div>
+              <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-2xl shadow-xs">
+                <i class="fa-solid fa-file-prescription"></i>
+              </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+              <div>
+                <span class="text-xs font-semibold text-slate-400 block mb-1">Ordens de Serviço (O.S.)</span>
+                <div id="dashTotalQuotes" class="text-3xl font-black text-slate-900">--</div>
+                <span class="text-[11px] text-purple-600 font-bold mt-1 inline-flex items-center gap-1">
+                  <i class="fa-solid fa-receipt"></i> Montagens & Orçamentos
+                </span>
+              </div>
+              <div class="w-14 h-14 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center text-2xl shadow-xs">
+                <i class="fa-solid fa-receipt"></i>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Grade 2 colunas: Receitas Recentes & Orçamentos -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- Receitas Médicas Recentes -->
+            <div class="lg:col-span-7 bg-white p-6 rounded-3xl border border-slate-200/80 shadow-xs">
+              <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-4">
+                <div class="flex items-center gap-2">
+                  <i class="fa-solid fa-file-prescription text-blue-600"></i>
+                  <h3 class="font-bold text-slate-900 text-sm">Últimas Receitas Médicas Registradas</h3>
+                </div>
+                <button onclick="Admin.switchTab('prescriptions')" class="text-xs font-bold text-lince-red hover:underline">
+                  Ver Prontuário Completo
+                </button>
+              </div>
+              
+              <div id="dashRecentPrescriptions" class="space-y-3">
+                <!-- Preenchido dinamicamente -->
+              </div>
+            </div>
+
+            <!-- Orçamentos e O.S. Recentes -->
+            <div class="lg:col-span-5 bg-white p-6 rounded-3xl border border-slate-200/80 shadow-xs">
+              <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-4">
+                <div class="flex items-center gap-2">
+                  <i class="fa-solid fa-receipt text-purple-600"></i>
+                  <h3 class="font-bold text-slate-900 text-sm">Ordens de Serviço do Laboratório</h3>
+                </div>
+                <button onclick="Admin.switchTab('quotes')" class="text-xs font-bold text-lince-red hover:underline">
+                  Ver Todas
+                </button>
+              </div>
+
+              <div id="dashRecentQuotes" class="space-y-3">
+                <!-- Preenchido dinamicamente -->
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- ====================================================
+             2. VIEW: CLIENTES & PRONTUÁRIOS (CRM)
+             ==================================================== -->
+        <div id="view_clients" class="admin-view hidden space-y-6">
+          
+          <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-xs">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
+              
+              <div class="w-full sm:w-96 relative">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                <input 
+                  type="text" 
+                  id="adminClientSearch" 
+                  placeholder="Buscar cliente por nome, CPF ou WhatsApp..." 
+                  class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-lince-red focus:bg-white transition"
+                />
+              </div>
+
+              <button onclick="Admin.openModal('newClientModal')" class="w-full sm:w-auto px-5 py-2.5 bg-lince-red hover:bg-red-800 text-white text-xs font-bold rounded-xl transition shadow flex items-center justify-center gap-2">
+                <i class="fa-solid fa-user-plus"></i>
+                <span>Cadastrar Novo Cliente</span>
+              </button>
+            </div>
+
+            <!-- Lista de Clientes -->
+            <div id="adminClientsList" class="divide-y divide-slate-100">
+              <!-- Preenchido via admin.js -->
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ====================================================
+             3. VIEW: RECEITAS OFTALMOLÓGICAS (PRONTUÁRIO)
+             ==================================================== -->
+        <div id="view_prescriptions" class="admin-view hidden space-y-6">
+          
+          <!-- Banner Informativo -->
+          <div class="bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 p-6 rounded-3xl text-white shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <span class="text-[10px] uppercase font-bold tracking-widest text-blue-400 bg-blue-400/10 px-2.5 py-1 rounded-full border border-blue-400/20">
+                Prontuário Oftalmológico & Central de Receitas
+              </span>
+              <h2 class="text-xl font-bold mt-2 font-serif-lince">Receitas dos Clientes & Uploads do Site</h2>
+              <p class="text-xs text-slate-300 mt-1 max-w-2xl">
+                Acompanhe todas as prescrições médicas de graus, fotos e PDFs de receitas enviadas pelos clientes diretamente na loja online e receitas cadastradas no balcão.
+              </p>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+              <button onclick="Admin.openModal('newPrescriptionModal')" class="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl transition shadow flex items-center gap-2">
+                <i class="fa-solid fa-plus"></i> Registrar Receita Manual
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-xs space-y-5">
+            <!-- Barra de Filtros de Origem -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
+              <div class="flex items-center gap-2 overflow-x-auto text-xs font-bold">
+                <button type="button" onclick="Admin.filterPrescriptions('all')" id="btnFilterRx_all" class="px-3.5 py-1.5 rounded-xl bg-blue-600 text-white shadow-xs transition flex items-center gap-1.5">
+                  <i class="fa-solid fa-list"></i> Todas (<span id="countRxTotal">--</span>)
+                </button>
+                <button type="button" onclick="Admin.filterPrescriptions('site')" id="btnFilterRx_site" class="px-3.5 py-1.5 rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-800 border border-purple-200 transition flex items-center gap-1.5">
+                  <i class="fa-solid fa-cloud-arrow-up text-purple-600"></i> Enviadas pelo Site (<span id="countRxSite">--</span>)
+                </button>
+                <button type="button" onclick="Admin.filterPrescriptions('store')" id="btnFilterRx_store" class="px-3.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition flex items-center gap-1.5">
+                  <i class="fa-solid fa-store text-slate-500"></i> Loja Física (<span id="countRxStore">--</span>)
+                </button>
+              </div>
+
+              <div class="text-xs text-slate-400 font-semibold flex items-center gap-1.5">
+                <i class="fa-solid fa-circle-check text-emerald-500"></i> Atualizado em tempo real
+              </div>
+            </div>
+
+            <!-- Lista de Receitas -->
+            <div id="adminPrescriptionsList" class="space-y-4">
+              <!-- Preenchido via admin.js -->
+            </div>
+          </div>
+
+        </div>
+
+
+
+        <!-- ====================================================
+             5. VIEW: ESTOQUE & PRODUTOS
+             ==================================================== -->
+        <div id="view_products" class="admin-view hidden space-y-6">
+          
+          <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-xs">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
+              <div>
+                <h3 class="font-bold text-slate-900 text-base">Controle de Estoque & Catálogo</h3>
+                <p class="text-xs text-slate-500">Cadastre armações, óculos solares, lentes oftálmicas e acessórios</p>
+              </div>
+
+              <button onclick="Admin.openModal('newProductModal')" class="w-full sm:w-auto px-5 py-2.5 bg-slate-900 hover:bg-black text-white text-xs font-bold rounded-xl transition shadow flex items-center justify-center gap-2">
+                <i class="fa-solid fa-plus"></i>
+                <span>Adicionar ao Catálogo</span>
+              </button>
+            </div>
+
+            <!-- Lista de Produtos -->
+            <div id="adminProductsList" class="space-y-3">
+              <!-- Preenchido via admin.js -->
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ====================================================
+             6. VIEW: ORÇAMENTOS & ORDENS DE SERVIÇO
+             ==================================================== -->
+        <div id="view_quotes" class="admin-view hidden space-y-6">
+          
+          <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-xs">
+            <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-6">
+              <div>
+                <h3 class="font-bold text-slate-900 text-base">Orçamentos & O.S. Geradas Online</h3>
+                <p class="text-xs text-slate-500">Pedidos montados no simulador de lentes prontos para produção em laboratório</p>
+              </div>
+            </div>
+
+            <!-- Lista de Orçamentos -->
+            <div id="adminQuotesList" class="space-y-4">
+              <!-- Preenchido via admin.js -->
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ========================================================
+             ABA 6: CONFIGURADOR DO SIMULADOR DE LENTES & ORÇAMENTO
+             ======================================================== -->
+        <div id="view_simulator" class="admin-view hidden space-y-8">
+          
+          <!-- Banner de Orientação -->
+          <div class="bg-gradient-to-r from-slate-900 to-red-950 p-6 rounded-3xl text-white shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <span class="text-[10px] uppercase font-bold tracking-widest text-amber-400 bg-amber-400/10 px-2.5 py-1 rounded-full border border-amber-400/20">
+                Personalização Dinâmica da Vitrine
+              </span>
+              <h2 class="text-xl font-bold mt-2 font-serif-lince">Edição do Simulador de Lentes & Orçamentos</h2>
+              <p class="text-xs text-slate-300 mt-1 max-w-xl">
+                Altere aqui os tipos de lentes, preços de venda, tratamentos adicionais e condições comerciais. Todas as alterações refletem automaticamente no simulador online do cliente.
+              </p>
+            </div>
+            <a href="/#simulador" target="_blank" class="px-4 py-2.5 bg-white text-slate-900 hover:bg-amber-100 text-xs font-bold rounded-xl transition shadow flex items-center justify-center gap-2 shrink-0">
+              <i class="fa-solid fa-eye text-lince-red"></i> Testar no Site
+            </a>
+          </div>
+
+          <!-- BLOCO 1: LENTES OFTÁLMICAS DO SIMULADOR -->
+          <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-xs">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100 mb-6">
+              <div>
+                <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
+                  <i class="fa-solid fa-glasses text-lince-red"></i> Modelos de Lentes Oftálmicas
+                </h3>
+                <p class="text-xs text-slate-500">Lentes que o cliente pode escolher ao montar os óculos no simulador</p>
+              </div>
+              <button onclick="Admin.openNewLensModal()" class="px-4 py-2.5 bg-lince-red hover:bg-red-800 text-white text-xs font-bold rounded-xl transition shadow flex items-center gap-2">
+                <i class="fa-solid fa-plus"></i> Nova Opção de Lente
+              </button>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-slate-50 text-slate-500 uppercase text-[10px] tracking-wider border-y border-slate-100">
+                  <tr>
+                    <th class="py-3 px-4">Ordem</th>
+                    <th class="py-3 px-4">Modelo da Lente</th>
+                    <th class="py-3 px-4">Selo / Destaque</th>
+                    <th class="py-3 px-4">Preço (R$)</th>
+                    <th class="py-3 px-4">Descrição Comercial</th>
+                    <th class="py-3 px-4">Status</th>
+                    <th class="py-3 px-4 text-right">Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="adminSimulatorLensesTable" class="divide-y divide-slate-100">
+                  <!-- Carregado via admin.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- BLOCO 2: TRATAMENTOS E PELÍCULAS ADICIONAIS -->
+          <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-xs">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100 mb-6">
+              <div>
+                <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
+                  <i class="fa-solid fa-shield-halved text-blue-600"></i> Tratamentos & Películas Adicionais
+                </h3>
+                <p class="text-xs text-slate-500">Opcionais de proteção antirreflexo, antirrisco e filtros adicionais</p>
+              </div>
+              <button onclick="Admin.openNewTreatmentModal()" class="px-4 py-2.5 bg-slate-900 hover:bg-black text-white text-xs font-bold rounded-xl transition shadow flex items-center gap-2">
+                <i class="fa-solid fa-plus"></i> Novo Tratamento
+              </button>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-slate-50 text-slate-500 uppercase text-[10px] tracking-wider border-y border-slate-100">
+                  <tr>
+                    <th class="py-3 px-4">Ordem</th>
+                    <th class="py-3 px-4">Tratamento</th>
+                    <th class="py-3 px-4">Preço Adicional</th>
+                    <th class="py-3 px-4">Padrão Marcado</th>
+                    <th class="py-3 px-4">Tipo</th>
+                    <th class="py-3 px-4">Status</th>
+                    <th class="py-3 px-4 text-right">Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="adminSimulatorTreatmentsTable" class="divide-y divide-slate-100">
+                  <!-- Carregado via admin.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- BLOCO 3: REGRAS COMERCIAIS & WHATSAPP DE ORÇAMENTO -->
+          <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-xs">
+            <div class="pb-4 border-b border-slate-100 mb-6">
+              <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
+                <i class="fa-solid fa-cash-register text-emerald-600"></i> Condições Comerciais & Envio de Orçamentos
+              </h3>
+              <p class="text-xs text-slate-500">Regras de parcelamento, desconto à vista no Pix e número de atendimento</p>
+            </div>
+
+            <form id="simulatorSettingsForm" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">Máximo de Parcelas sem Juros</label>
+                <div class="relative">
+                  <input type="number" id="setting_max_installments" min="1" max="24" required class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none font-bold">
+                  <span class="absolute right-3 top-2.5 text-slate-400 font-bold">vezes</span>
+                </div>
+              </div>
+
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">Desconto no Pix à Vista (%)</label>
+                <div class="relative">
+                  <input type="number" id="setting_pix_discount" min="0" max="50" step="0.5" required class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none font-bold">
+                  <span class="absolute right-3 top-2.5 text-slate-400 font-bold">%</span>
+                </div>
+              </div>
+
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">WhatsApp da Loja (com DDI e DDD)</label>
+                <input type="text" id="setting_whatsapp_phone" placeholder="Ex: 5511987654321" required class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none font-mono">
+              </div>
+
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">Texto Taxa de Montagem</label>
+                <input type="text" id="setting_assembly_fee_text" placeholder="Cortesia / Grátis" required class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none">
+              </div>
+
+              <div class="sm:col-span-2 lg:col-span-4 flex justify-end pt-2">
+                <button type="submit" id="btnSaveSimulatorSettings" class="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition shadow flex items-center gap-2">
+                  <i class="fa-solid fa-floppy-disk"></i> Salvar Condições Comerciais
+                </button>
+              </div>
+            </form>
+          </div>
+
+        </div>
+
+      
+
+        
+        <!-- ========================================================
+             TÓPICO 1: IDENTIDADE DA ÓTICA & CONTATOS
+             ======================================================== -->
+        <div id="view_cms_identity" class="admin-view hidden space-y-6">
+
+          <!-- Barra de Navegação Rápida entre Tópicos -->
+          <div class="bg-white p-2 rounded-2xl border border-slate-200/80 shadow-2xs flex items-center gap-1.5 overflow-x-auto scrollbar-none text-xs font-bold mb-4">
+            <span class="text-[10px] text-slate-400 uppercase font-black px-2.5 tracking-wider shrink-0 flex items-center gap-1.5">
+              <i class="fa-solid fa-paintbrush text-pink-600"></i> Áreas do Site:
+            </span>
+            
+              <button type="button" onclick="Admin.switchTab('cms_identity')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 bg-pink-600 text-white shadow-sm font-extrabold">
+                <i class="fa-solid fa-building-columns text-xs"></i>
+                <span>1. Identidade & Contatos</span>
+              </button>
+            
+              <button type="button" onclick="Admin.switchTab('cms_topbar')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+                <i class="fa-solid fa-bullhorn text-xs"></i>
+                <span>2. Topo & Avisos</span>
+              </button>
+            
+              <button type="button" onclick="Admin.switchTab('cms_hero')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+                <i class="fa-solid fa-wand-magic-sparkles text-xs"></i>
+                <span>3. Banner Hero</span>
+              </button>
+            
+              <button type="button" onclick="Admin.switchTab('cms_featured')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+                <i class="fa-solid fa-glasses text-xs"></i>
+                <span>4. Armação Destaque</span>
+              </button>
+            
+              <button type="button" onclick="Admin.switchTab('cms_services')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+                <i class="fa-solid fa-microscope text-xs"></i>
+                <span>5. Serviços Técnicos</span>
+              </button>
+            
+              <button type="button" onclick="Admin.switchTab('cms_footer')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+                <i class="fa-solid fa-file-contract text-xs"></i>
+                <span>6. Rodapé Legal</span>
+              </button>
+            
+          </div>
+
+          <!-- Banner Informativo da Seção -->
+          <div class="bg-gradient-to-r from-slate-900 via-pink-950 to-red-950 p-6 rounded-3xl text-white shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <span class="text-[10px] uppercase font-bold tracking-widest text-pink-400 bg-pink-400/10 px-2.5 py-1 rounded-full border border-pink-400/20">
+                Tópico 1 de 6
+              </span>
+              <h2 class="text-xl font-bold mt-2 font-serif-lince">1. Identidade da Ótica, Contatos & Redes Sociais</h2>
+              <p class="text-xs text-slate-300 mt-1 max-w-2xl">Personalize o nome da ótica, slogan oficial, telefones, WhatsApp, horários, endereço físico e links das redes sociais.</p>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+              <a href="/" target="_blank" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl transition flex items-center gap-2">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> Ver Site
+              </a>
+              <button type="button" onclick="document.getElementById('cmsForm_identity').requestSubmit()" class="px-5 py-2.5 bg-pink-600 hover:bg-pink-700 text-white text-xs font-bold rounded-xl transition shadow flex items-center gap-2">
+                <i class="fa-solid fa-floppy-disk"></i> Salvar Esta Área
+              </button>
+            </div>
+          </div>
+
+          <form id="cmsForm_identity" class="cms-section-form space-y-6">
+            <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-xs">
+              <div class="pb-4 border-b border-slate-100 mb-6">
+                <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
+                  <i class="fa-solid fa-building-columns text-lince-red"></i> Dados Oficiais da Empresa & Canais de Atendimento
+                </h3>
+                <p class="text-xs text-slate-500">Exibidos no cabeçalho do site, botões de contato direto e rodapé</p>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 text-xs">
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1">Nome Oficial da Ótica *</label>
+                  <input type="text" name="store_name" id="cms_store_name" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none font-bold text-sm">
+                </div>
+
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1">Slogan / Subtítulo da Marca</label>
+                  <input type="text" name="store_slogan" id="cms_store_slogan" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none">
+                </div>
+
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1">Telefone Principal (Fixo / Central)</label>
+                  <input type="text" name="store_phone" id="cms_store_phone" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none">
+                </div>
+
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1">WhatsApp de Atendimento (com DDI e DDD)</label>
+                  <input type="text" name="store_whatsapp" id="cms_store_whatsapp" placeholder="5511987654321" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none font-mono">
+                  <span class="text-[10px] text-slate-400 mt-0.5 block">Exemplo: 5511987654321 (apenas números)</span>
+                </div>
+
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1">E-mail Comercial Oficial</label>
+                  <input type="email" name="store_email" id="cms_store_email" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none">
+                </div>
+
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1">CNPJ da Ótica</label>
+                  <input type="text" name="store_cnpj" id="cms_store_cnpj" placeholder="00.000.000/0001-00" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none font-mono">
+                </div>
+
+                <div class="sm:col-span-2">
+                  <label class="block font-bold text-slate-700 mb-1">Endereço da Loja Física Completo</label>
+                  <input type="text" name="store_address" id="cms_store_address" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none">
+                </div>
+
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1">Horário de Atendimento / Funcionamento</label>
+                  <input type="text" name="store_hours" id="cms_store_hours" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none">
+                </div>
+
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1"><i class="fa-brands fa-instagram text-pink-600 mr-1"></i> Link do Instagram Oficial</label>
+                  <input type="text" name="store_instagram" id="cms_store_instagram" placeholder="https://instagram.com/oticalince" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none font-mono text-[11px]">
+                </div>
+
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1"><i class="fa-brands fa-facebook text-blue-600 mr-1"></i> Link do Facebook Oficial</label>
+                  <input type="text" name="store_facebook" id="cms_store_facebook" placeholder="https://facebook.com/oticalince" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none font-mono text-[11px]">
+                </div>
+              </div>
+            </div>
+
+            <div class="flex justify-end">
+              <button type="submit" class="px-8 py-3.5 bg-pink-600 hover:bg-pink-700 text-white font-extrabold rounded-2xl text-xs uppercase tracking-wider transition shadow-lg flex items-center gap-2">
+                <i class="fa-solid fa-floppy-disk text-sm"></i>
+                <span>Salvar Identidade & Contatos</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+
+        <!-- ========================================================
+             TÓPICO 2: BARRA SUPERIOR DE AVISOS (TOPBAR)
+             ======================================================== -->
+        <div id="view_cms_topbar" class="admin-view hidden space-y-6">
+
+          <!-- Barra de Navegação Rápida entre Tópicos -->
+          <div class="bg-white p-2 rounded-2xl border border-slate-200/80 shadow-2xs flex items-center gap-1.5 overflow-x-auto scrollbar-none text-xs font-bold mb-4">
+            <span class="text-[10px] text-slate-400 uppercase font-black px-2.5 tracking-wider shrink-0 flex items-center gap-1.5">
+              <i class="fa-solid fa-paintbrush text-pink-600"></i> Áreas do Site:
+            </span>
+            
+              <button type="button" onclick="Admin.switchTab('cms_identity')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+                <i class="fa-solid fa-building-columns text-xs"></i>
+                <span>1. Identidade & Contatos</span>
+              </button>
+            
+              <button type="button" onclick="Admin.switchTab('cms_topbar')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 bg-pink-600 text-white shadow-sm font-extrabold">
+                <i class="fa-solid fa-bullhorn text-xs"></i>
+                <span>2. Topo & Avisos</span>
+              </button>
+            
+              <button type="button" onclick="Admin.switchTab('cms_hero')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+                <i class="fa-solid fa-wand-magic-sparkles text-xs"></i>
+                <span>3. Banner Hero</span>
+              </button>
+            
+              <button type="button" onclick="Admin.switchTab('cms_featured')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+                <i class="fa-solid fa-glasses text-xs"></i>
+                <span>4. Armação Destaque</span>
+              </button>
+            
+              <button type="button" onclick="Admin.switchTab('cms_services')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+                <i class="fa-solid fa-microscope text-xs"></i>
+                <span>5. Serviços Técnicos</span>
+              </button>
+            
+              <button type="button" onclick="Admin.switchTab('cms_footer')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+                <i class="fa-solid fa-file-contract text-xs"></i>
+                <span>6. Rodapé Legal</span>
+              </button>
+            
+          </div>
+
+          <!-- Banner Informativo da Seção -->
+          <div class="bg-gradient-to-r from-slate-900 via-pink-950 to-red-950 p-6 rounded-3xl text-white shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <span class="text-[10px] uppercase font-bold tracking-widest text-pink-400 bg-pink-400/10 px-2.5 py-1 rounded-full border border-pink-400/20">
+                Tópico 2 de 6
+              </span>
+              <h2 class="text-xl font-bold mt-2 font-serif-lince">2. Barra Superior de Avisos & Destaques (Topo)</h2>
+              <p class="text-xs text-slate-300 mt-1 max-w-2xl">Configure a faixa colorida no topo do site com selos de laboratório, avisos de frete e prazos de garantia.</p>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+              <a href="/" target="_blank" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl transition flex items-center gap-2">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> Ver Site
+              </a>
+              <button type="button" onclick="document.getElementById('cmsForm_topbar').requestSubmit()" class="px-5 py-2.5 bg-pink-600 hover:bg-pink-700 text-white text-xs font-bold rounded-xl transition shadow flex items-center gap-2">
+                <i class="fa-solid fa-floppy-disk"></i> Salvar Esta Área
+              </button>
+            </div>
+          </div>
+
+          <form id="cmsForm_topbar" class="cms-section-form space-y-6">
+            <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-xs">
+              <div class="pb-4 border-b border-slate-100 mb-6">
+                <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
+                  <i class="fa-solid fa-bullhorn text-amber-500"></i> Textos e Avisos de Destaque no Topo
+                </h3>
+                <p class="text-xs text-slate-500">A primeira faixa que o visitante visualiza ao entrar na página inicial</p>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 text-xs">
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1">Selo / Tag do Topo</label>
+                  <input type="text" name="topbar_tag" id="cms_topbar_tag" placeholder="Ex: Laboratório Digital" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none font-bold">
+                </div>
+
+                <div class="sm:col-span-2">
+                  <label class="block font-bold text-slate-700 mb-1">Mensagem de Destaque Principal</label>
+                  <input type="text" name="topbar_text" id="cms_topbar_text" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none font-medium">
+                </div>
+
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1">Aviso de Frete Grátis</label>
+                  <input type="text" name="topbar_shipping" id="cms_topbar_shipping" placeholder="Ex: Frete Grátis acima de R$ 299" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none">
+                </div>
+
+                <div class="sm:col-span-2">
+                  <label class="block font-bold text-slate-700 mb-1">Aviso de Garantia Oficial</label>
+                  <input type="text" name="topbar_warranty" id="cms_topbar_warranty" placeholder="Ex: 2 Anos de Garantia" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none">
+                </div>
+              </div>
+            </div>
+
+            <div class="flex justify-end">
+              <button type="submit" class="px-8 py-3.5 bg-pink-600 hover:bg-pink-700 text-white font-extrabold rounded-2xl text-xs uppercase tracking-wider transition shadow-lg flex items-center gap-2">
+                <i class="fa-solid fa-floppy-disk text-sm"></i>
+                <span>Salvar Barra Superior</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+
+        <!-- ========================================================
+             TÓPICO 3: BANNER PRINCIPAL (HERO) & MÉTRICAS
+             ======================================================== -->
+        <div id="view_cms_hero" class="admin-view hidden space-y-6">
+
+          <!-- Barra de Navegação Rápida entre Tópicos -->
+          <div class="bg-white p-2 rounded-2xl border border-slate-200/80 shadow-2xs flex items-center gap-1.5 overflow-x-auto scrollbar-none text-xs font-bold mb-4">
+            <span class="text-[10px] text-slate-400 uppercase font-black px-2.5 tracking-wider shrink-0 flex items-center gap-1.5">
+              <i class="fa-solid fa-paintbrush text-pink-600"></i> Áreas do Site:
+            </span>
+            
+              <button type="button" onclick="Admin.switchTab('cms_identity')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+                <i class="fa-solid fa-building-columns text-xs"></i>
+                <span>1. Identidade & Contatos</span>
+              </button>
+            
+              <button type="button" onclick="Admin.switchTab('cms_topbar')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+                <i class="fa-solid fa-bullhorn text-xs"></i>
+                <span>2. Topo & Avisos</span>
+              </button>
+            
+              <button type="button" onclick="Admin.switchTab('cms_hero')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 bg-pink-600 text-white shadow-sm font-extrabold">
+                <i class="fa-solid fa-wand-magic-sparkles text-xs"></i>
+                <span>3. Banner Hero</span>
+              </button>
+            
+              <button type="button" onclick="Admin.switchTab('cms_featured')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+                <i class="fa-solid fa-glasses text-xs"></i>
+                <span>4. Armação Destaque</span>
+              </button>
+            
+              <button type="button" onclick="Admin.switchTab('cms_services')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+                <i class="fa-solid fa-microscope text-xs"></i>
+                <span>5. Serviços Técnicos</span>
+              </button>
+            
+              <button type="button" onclick="Admin.switchTab('cms_footer')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+                <i class="fa-solid fa-file-contract text-xs"></i>
+                <span>6. Rodapé Legal</span>
+              </button>
+            
+          </div>
+
+          <!-- Banner Informativo da Seção -->
+          <div class="bg-gradient-to-r from-slate-900 via-pink-950 to-red-950 p-6 rounded-3xl text-white shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <span class="text-[10px] uppercase font-bold tracking-widest text-pink-400 bg-pink-400/10 px-2.5 py-1 rounded-full border border-pink-400/20">
+                Tópico 3 de 6
+              </span>
+              <h2 class="text-xl font-bold mt-2 font-serif-lince">3. Banner Principal (Hero) & Métricas de Impacto</h2>
+              <p class="text-xs text-slate-300 mt-1 max-w-2xl">Edite o título de impacto, o subtítulo descritivo, os botões de ação e os 4 números de destaque.</p>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+              <a href="/" target="_blank" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl transition flex items-center gap-2">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> Ver Site
+              </a>
+              <button type="button" onclick="document.getElementById('cmsForm_hero').requestSubmit()" class="px-5 py-2.5 bg-pink-600 hover:bg-pink-700 text-white text-xs font-bold rounded-xl transition shadow flex items-center gap-2">
+                <i class="fa-solid fa-floppy-disk"></i> Salvar Esta Área
+              </button>
+            </div>
+          </div>
+
+          <form id="cmsForm_hero" class="cms-section-form space-y-6">
+            <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-xs space-y-6 text-xs">
+              <div class="pb-4 border-b border-slate-100">
+                <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
+                  <i class="fa-solid fa-wand-magic-sparkles text-purple-600"></i> Chamada Principal & Ações
+                </h3>
+                <p class="text-slate-500">Textos do primeiro bloco de abertura do site da Ótica Lince</p>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1">Selo / Tag do Banner</label>
+                  <input type="text" name="hero_badge" id="cms_hero_badge" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none">
+                </div>
+                <div class="sm:col-span-2">
+                  <label class="block font-bold text-slate-700 mb-1">Título Principal de Impacto</label>
+                  <input type="text" name="hero_title" id="cms_hero_title" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none font-bold text-sm">
+                </div>
+              </div>
+
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">Subtítulo / Descrição Completa do Banner</label>
+                <textarea name="hero_subtitle" id="cms_hero_subtitle" rows="3" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none"></textarea>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1">Texto do Botão 1 (Catálogo)</label>
+                  <input type="text" name="hero_btn_catalog" id="cms_hero_btn_catalog" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none font-bold">
+                </div>
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1">Texto do Botão 2 (Simulador)</label>
+                  <input type="text" name="hero_btn_simulator" id="cms_hero_btn_simulator" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none font-bold">
+                </div>
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1">Texto do Botão 3 (Receita)</label>
+                  <input type="text" name="hero_btn_prescription" id="cms_hero_btn_prescription" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none font-bold">
+                </div>
+              </div>
+
+              <!-- 4 Métricas Rápidas -->
+              <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200/80">
+                <span class="font-extrabold text-slate-800 block mb-3 uppercase text-[11px] tracking-wider">
+                  <i class="fa-solid fa-chart-simple text-purple-600 mr-1.5"></i> 4 Métricas Rápidas Exibidas no Banner:
+                </span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div class="bg-white p-3.5 rounded-xl border border-slate-200">
+                    <span class="text-[10px] font-bold text-slate-400 block mb-1">MÉTRICA 1</span>
+                    <input type="text" name="hero_stat1_val" id="cms_hero_stat1_val" placeholder="100%" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg font-black text-sm mb-1.5 text-lince-red">
+                    <input type="text" name="hero_stat1_label" id="cms_hero_stat1_label" class="w-full p-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs">
+                  </div>
+                  <div class="bg-white p-3.5 rounded-xl border border-slate-200">
+                    <span class="text-[10px] font-bold text-slate-400 block mb-1">MÉTRICA 2</span>
+                    <input type="text" name="hero_stat2_val" id="cms_hero_stat2_val" placeholder="10x" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg font-black text-sm mb-1.5 text-lince-red">
+                    <input type="text" name="hero_stat2_label" id="cms_hero_stat2_label" class="w-full p-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs">
+                  </div>
+                  <div class="bg-white p-3.5 rounded-xl border border-slate-200">
+                    <span class="text-[10px] font-bold text-slate-400 block mb-1">MÉTRICA 3</span>
+                    <input type="text" name="hero_stat3_val" id="cms_hero_stat3_val" placeholder="2 Anos" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg font-black text-sm mb-1.5 text-lince-red">
+                    <input type="text" name="hero_stat3_label" id="cms_hero_stat3_label" class="w-full p-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs">
+                  </div>
+                  <div class="bg-white p-3.5 rounded-xl border border-slate-200">
+                    <span class="text-[10px] font-bold text-slate-400 block mb-1">MÉTRICA 4</span>
+                    <input type="text" name="hero_stat4_val" id="cms_hero_stat4_val" placeholder="Digital" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg font-black text-sm mb-1.5 text-lince-red">
+                    <input type="text" name="hero_stat4_label" id="cms_hero_stat4_label" class="w-full p-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex justify-end">
+              <button type="submit" class="px-8 py-3.5 bg-pink-600 hover:bg-pink-700 text-white font-extrabold rounded-2xl text-xs uppercase tracking-wider transition shadow-lg flex items-center gap-2">
+                <i class="fa-solid fa-floppy-disk text-sm"></i>
+                <span>Salvar Banner Principal</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+
+        <!-- ========================================================
+             TÓPICO 4: ARMAÇÃO EM DESTAQUE DA COLEÇÃO
+             ======================================================== -->
+        <div id="view_cms_featured" class="admin-view hidden space-y-6">
+
+          <!-- Barra de Navegação Rápida entre Tópicos -->
+          <div class="bg-white p-2 rounded-2xl border border-slate-200/80 shadow-2xs flex items-center gap-1.5 overflow-x-auto scrollbar-none text-xs font-bold mb-4">
+            <span class="text-[10px] text-slate-400 uppercase font-black px-2.5 tracking-wider shrink-0 flex items-center gap-1.5">
+              <i class="fa-solid fa-paintbrush text-pink-600"></i> Áreas do Site:
+            </span>
+            
+              <button type="button" onclick="Admin.switchTab('cms_identity')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+                <i class="fa-solid fa-building-columns text-xs"></i>
+                <span>1. Identidade & Contatos</span>
+              </button>
+            
+              <button type="button" onclick="Admin.switchTab('cms_topbar')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+                <i class="fa-solid fa-bullhorn text-xs"></i>
+                <span>2. Topo & Avisos</span>
+              </button>
+            
+              <button type="button" onclick="Admin.switchTab('cms_hero')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+                <i class="fa-solid fa-wand-magic-sparkles text-xs"></i>
+                <span>3. Banner Hero</span>
+              </button>
+            
+              <button type="button" onclick="Admin.switchTab('cms_featured')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 bg-pink-600 text-white shadow-sm font-extrabold">
+                <i class="fa-solid fa-glasses text-xs"></i>
+                <span>4. Armação Destaque</span>
+              </button>
+            
+              <button type="button" onclick="Admin.switchTab('cms_services')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+                <i class="fa-solid fa-microscope text-xs"></i>
+                <span>5. Serviços Técnicos</span>
+              </button>
+            
+              <button type="button" onclick="Admin.switchTab('cms_footer')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+                <i class="fa-solid fa-file-contract text-xs"></i>
+                <span>6. Rodapé Legal</span>
+              </button>
+            
+          </div>
+
+          <!-- Banner Informativo da Seção -->
+          <div class="bg-gradient-to-r from-slate-900 via-pink-950 to-red-950 p-6 rounded-3xl text-white shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <span class="text-[10px] uppercase font-bold tracking-widest text-pink-400 bg-pink-400/10 px-2.5 py-1 rounded-full border border-pink-400/20">
+                Tópico 4 de 6
+              </span>
+              <h2 class="text-xl font-bold mt-2 font-serif-lince">4. Armação em Destaque da Coleção</h2>
+              <p class="text-xs text-slate-300 mt-1 max-w-2xl">Personalize o modelo de óculos exibido em evidência no cartão flutuante do banner principal.</p>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+              <a href="/" target="_blank" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl transition flex items-center gap-2">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> Ver Site
+              </a>
+              <button type="button" onclick="document.getElementById('cmsForm_featured').requestSubmit()" class="px-5 py-2.5 bg-pink-600 hover:bg-pink-700 text-white text-xs font-bold rounded-xl transition shadow flex items-center gap-2">
+                <i class="fa-solid fa-floppy-disk"></i> Salvar Esta Área
+              </button>
+            </div>
+          </div>
+
+          <form id="cmsForm_featured" class="cms-section-form space-y-6">
+            <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-xs space-y-6 text-xs">
+              <div class="pb-4 border-b border-slate-100 flex items-center justify-between">
+                <div>
+                  <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
+                    <i class="fa-solid fa-glasses text-emerald-600"></i> Modelo de Óculos em Evidência
+                  </h3>
+                  <p class="text-slate-500">Exibição interativa com foto, preço riscado e valor promocional</p>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1">Selo de Lançamento / Badge</label>
+                  <input type="text" name="hero_featured_badge" id="cms_hero_featured_badge" placeholder="Ex: Lançamento 2026" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none font-bold">
+                </div>
+
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1">Nome da Coleção</label>
+                  <input type="text" name="hero_featured_collection" id="cms_hero_featured_collection" placeholder="Ex: Coleção Signature" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none">
+                </div>
+
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1">Nome Completo do Modelo</label>
+                  <input type="text" name="hero_featured_title" id="cms_hero_featured_title" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none font-bold">
+                </div>
+              </div>
+
+              <!-- UPLOAD DE ARQUIVO DA FOTO DA ARMAÇÃO -->
+              <div class="p-5 bg-gradient-to-br from-slate-50 to-pink-50/30 rounded-2xl border-2 border-dashed border-slate-200 hover:border-pink-400 transition-colors">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+                  <div>
+                    <label class="block font-bold text-slate-800 text-sm flex items-center gap-2">
+                      <i class="fa-solid fa-cloud-arrow-up text-pink-600"></i>
+                      <span>Upload da Imagem da Armação</span>
+                    </label>
+                    <p class="text-[11px] text-slate-500 mt-0.5">
+                      Envie uma foto da armação do seu computador ou celular (PNG transparente, JPG ou WEBP)
+                    </p>
+                  </div>
+                  <span id="cms_featured_status_badge" class="inline-flex items-center gap-1.5 text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200/60 shrink-0">
+                    <i class="fa-solid fa-circle-check"></i> Foto atual ativa
+                  </span>
+                </div>
+
+                <!-- Input oculto para reter a URL/caminho atual quando nenhum arquivo novo for selecionado -->
+                <input type="hidden" name="hero_featured_image_current" id="cms_hero_featured_image" value="">
+                
+                <!-- Input de arquivo nativo -->
+                <input 
+                  type="file" 
+                  id="cms_hero_featured_image_file" 
+                  name="hero_featured_image" 
+                  accept="image/png, image/jpeg, image/jpg, image/webp" 
+                  class="hidden" 
+                  onchange="Admin.handleFeaturedImageChange(this)"
+                />
+
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-5 items-center">
+                  
+                  <!-- Área clicável para escolher arquivo -->
+                  <div class="md:col-span-8">
+                    <div 
+                      onclick="document.getElementById('cms_hero_featured_image_file').click()" 
+                      class="cursor-pointer p-5 bg-white rounded-2xl border border-slate-200 hover:border-pink-500 hover:bg-pink-50/30 hover:shadow-xs transition flex items-center gap-4 group"
+                    >
+                      <div class="w-14 h-14 rounded-2xl bg-pink-100/80 text-pink-600 flex items-center justify-center text-2xl group-hover:scale-105 transition shrink-0 shadow-2xs">
+                        <i class="fa-solid fa-camera"></i>
+                      </div>
+                      <div class="flex-1 min-w-0">
+                        <div class="font-extrabold text-slate-800 text-xs flex items-center gap-2">
+                          <span>Clique para selecionar uma foto da armação</span>
+                          <span class="text-[10px] bg-pink-600 text-white font-bold px-2 py-0.5 rounded-full shadow-2xs">Upload</span>
+                        </div>
+                        <p id="cms_featured_file_info" class="text-[11px] text-slate-400 font-mono truncate mt-1">
+                          Nenhum novo arquivo selecionado (mantendo foto atual salva)
+                        </p>
+                        <span class="text-[10px] text-slate-400 mt-0.5 block">
+                          Formatos aceitos: PNG (recomendado sem fundo), JPG ou WEBP de até 10MB
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Cartão de Pré-visualização -->
+                  <div class="md:col-span-4">
+                    <div class="h-32 bg-white rounded-2xl border border-slate-200/90 shadow-2xs flex items-center justify-center p-3 relative overflow-hidden group">
+                      <img 
+                        id="cms_preview_featured_img" 
+                        src="" 
+                        alt="Foto Destaque" 
+                        class="max-h-full max-w-full object-contain filter drop-shadow-sm transition duration-300 group-hover:scale-105" 
+                        onerror="this.src='/images/logo.png'"
+                      >
+                      <div class="absolute bottom-1.5 right-2 bg-slate-900/75 text-white text-[9px] font-bold px-2 py-0.5 rounded-md backdrop-blur-xs flex items-center gap-1">
+                        <i class="fa-solid fa-eye text-[8px]"></i> Visualização
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1">Preço Anterior (Riscado / De:)</label>
+                  <input type="text" name="hero_featured_old_price" id="cms_hero_featured_old_price" placeholder="R$ 589,00" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none">
+                </div>
+
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1">Preço Promocional em Destaque (Por:)</label>
+                  <input type="text" name="hero_featured_price" id="cms_hero_featured_price" placeholder="R$ 499,00" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none font-black text-lince-red">
+                </div>
+              </div>
+
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">Descrição Comercial da Armação</label>
+                <textarea name="hero_featured_desc" id="cms_hero_featured_desc" rows="2" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none"></textarea>
+              </div>
+            </div>
+
+            <div class="flex justify-end">
+              <button type="submit" class="px-8 py-3.5 bg-pink-600 hover:bg-pink-700 text-white font-extrabold rounded-2xl text-xs uppercase tracking-wider transition shadow-lg flex items-center gap-2">
+                <i class="fa-solid fa-floppy-disk text-sm"></i>
+                <span>Salvar Armação em Destaque</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+
+        <!-- ========================================================
+             TÓPICO 5: SERVIÇOS ESPECIALIZADOS & BANNER WHATSAPP
+             ======================================================== -->
+        <div id="view_cms_services" class="admin-view hidden space-y-6">
+
+          <!-- Barra de Navegação Rápida entre Tópicos -->
+          <div class="bg-white p-2 rounded-2xl border border-slate-200/80 shadow-2xs flex items-center gap-1.5 overflow-x-auto scrollbar-none text-xs font-bold mb-4">
+            <span class="text-[10px] text-slate-400 uppercase font-black px-2.5 tracking-wider shrink-0 flex items-center gap-1.5">
+              <i class="fa-solid fa-paintbrush text-pink-600"></i> Áreas do Site:
+            </span>
+            
+              <button type="button" onclick="Admin.switchTab('cms_identity')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+                <i class="fa-solid fa-building-columns text-xs"></i>
+                <span>1. Identidade & Contatos</span>
+              </button>
+            
+              <button type="button" onclick="Admin.switchTab('cms_topbar')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+                <i class="fa-solid fa-bullhorn text-xs"></i>
+                <span>2. Topo & Avisos</span>
+              </button>
+            
+              <button type="button" onclick="Admin.switchTab('cms_hero')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+                <i class="fa-solid fa-wand-magic-sparkles text-xs"></i>
+                <span>3. Banner Hero</span>
+              </button>
+            
+              <button type="button" onclick="Admin.switchTab('cms_featured')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+                <i class="fa-solid fa-glasses text-xs"></i>
+                <span>4. Armação Destaque</span>
+              </button>
+            
+              <button type="button" onclick="Admin.switchTab('cms_services')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 bg-pink-600 text-white shadow-sm font-extrabold">
+                <i class="fa-solid fa-microscope text-xs"></i>
+                <span>5. Serviços Técnicos</span>
+              </button>
+            
+              <button type="button" onclick="Admin.switchTab('cms_footer')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+                <i class="fa-solid fa-file-contract text-xs"></i>
+                <span>6. Rodapé Legal</span>
+              </button>
+            
+          </div>
+
+          <!-- Banner Informativo da Seção -->
+          <div class="bg-gradient-to-r from-slate-900 via-pink-950 to-red-950 p-6 rounded-3xl text-white shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <span class="text-[10px] uppercase font-bold tracking-widest text-pink-400 bg-pink-400/10 px-2.5 py-1 rounded-full border border-pink-400/20">
+                Tópico 5 de 6
+              </span>
+              <h2 class="text-xl font-bold mt-2 font-serif-lince">5. Serviços Especializados da Ótica Lince</h2>
+              <p class="text-xs text-slate-300 mt-1 max-w-2xl">Edite os 4 diferenciais técnicos do laboratório e a chamada de ação para envio de receitas via WhatsApp.</p>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+              <a href="/" target="_blank" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl transition flex items-center gap-2">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> Ver Site
+              </a>
+              <button type="button" onclick="document.getElementById('cmsForm_services').requestSubmit()" class="px-5 py-2.5 bg-pink-600 hover:bg-pink-700 text-white text-xs font-bold rounded-xl transition shadow flex items-center gap-2">
+                <i class="fa-solid fa-floppy-disk"></i> Salvar Esta Área
+              </button>
+            </div>
+          </div>
+
+          <form id="cmsForm_services" class="cms-section-form space-y-6">
+            <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-xs space-y-6 text-xs">
+              <div class="pb-4 border-b border-slate-100">
+                <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
+                  <i class="fa-solid fa-microscope text-blue-600"></i> Cabeçalho da Seção de Serviços
+                </h3>
+                <p class="text-slate-500">Títulos que apresentam os diferenciais laboratoriais da ótica</p>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1">Selo da Seção</label>
+                  <input type="text" name="services_tag" id="cms_services_tag" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none">
+                </div>
+                <div class="sm:col-span-2">
+                  <label class="block font-bold text-slate-700 mb-1">Título da Seção de Serviços</label>
+                  <input type="text" name="services_title" id="cms_services_title" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none font-bold">
+                </div>
+              </div>
+
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">Subtítulo Explicativo da Seção</label>
+                <textarea name="services_subtitle" id="cms_services_subtitle" rows="2" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none"></textarea>
+              </div>
+
+              <!-- 4 Diferenciais -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-5 pt-2">
+                <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200/80 space-y-2.5">
+                  <span class="font-extrabold text-slate-800 block uppercase text-[10px] text-lince-red">Diferencial 1:</span>
+                  <input type="text" name="service1_title" id="cms_service1_title" placeholder="Laboratório Digital Próprio" class="w-full p-2.5 bg-white border border-slate-200 rounded-xl font-bold">
+                  <textarea name="service1_desc" id="cms_service1_desc" rows="2" class="w-full p-2.5 bg-white border border-slate-200 rounded-xl"></textarea>
+                  <input type="text" name="service1_badge" id="cms_service1_badge" placeholder="Selo de qualidade" class="w-full p-2 bg-white border border-slate-200 rounded-xl text-[11px] text-lince-red font-bold">
+                </div>
+
+                <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200/80 space-y-2.5">
+                  <span class="font-extrabold text-slate-800 block uppercase text-[10px] text-amber-700">Diferencial 2:</span>
+                  <input type="text" name="service2_title" id="cms_service2_title" placeholder="Medição Digital de DNP" class="w-full p-2.5 bg-white border border-slate-200 rounded-xl font-bold">
+                  <textarea name="service2_desc" id="cms_service2_desc" rows="2" class="w-full p-2.5 bg-white border border-slate-200 rounded-xl"></textarea>
+                  <input type="text" name="service2_badge" id="cms_service2_badge" placeholder="Selo de precisão" class="w-full p-2 bg-white border border-slate-200 rounded-xl text-[11px] text-amber-700 font-bold">
+                </div>
+
+                <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200/80 space-y-2.5">
+                  <span class="font-extrabold text-slate-800 block uppercase text-[10px] text-blue-700">Diferencial 3:</span>
+                  <input type="text" name="service3_title" id="cms_service3_title" placeholder="Ajuste & Manutenção Vitalícia" class="w-full p-2.5 bg-white border border-slate-200 rounded-xl font-bold">
+                  <textarea name="service3_desc" id="cms_service3_desc" rows="2" class="w-full p-2.5 bg-white border border-slate-200 rounded-xl"></textarea>
+                  <input type="text" name="service3_badge" id="cms_service3_badge" placeholder="Selo de cortesia" class="w-full p-2 bg-white border border-slate-200 rounded-xl text-[11px] text-blue-700 font-bold">
+                </div>
+
+                <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200/80 space-y-2.5">
+                  <span class="font-extrabold text-slate-800 block uppercase text-[10px] text-emerald-700">Diferencial 4:</span>
+                  <input type="text" name="service4_title" id="cms_service4_title" placeholder="Análise de Receita Médica" class="w-full p-2.5 bg-white border border-slate-200 rounded-xl font-bold">
+                  <textarea name="service4_desc" id="cms_service4_desc" rows="2" class="w-full p-2.5 bg-white border border-slate-200 rounded-xl"></textarea>
+                  <input type="text" name="service4_badge" id="cms_service4_badge" placeholder="Selo de consultoria" class="w-full p-2 bg-white border border-slate-200 rounded-xl text-[11px] text-emerald-700 font-bold">
+                </div>
+              </div>
+
+              <!-- Banner WhatsApp -->
+              <div class="bg-emerald-50/60 p-5 rounded-2xl border border-emerald-200/80 space-y-3">
+                <span class="font-extrabold text-emerald-900 block uppercase text-[11px] tracking-wider">
+                  <i class="fa-brands fa-whatsapp text-emerald-600 mr-1.5"></i> Banner de Envio de Receita via WhatsApp:
+                </span>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div>
+                    <label class="block font-bold text-slate-700 mb-1">Tag Superior do Banner</label>
+                    <input type="text" name="service_cta_tag" id="cms_service_cta_tag" class="w-full p-2.5 bg-white border border-emerald-200 rounded-xl">
+                  </div>
+                  <div class="sm:col-span-2">
+                    <label class="block font-bold text-slate-700 mb-1">Título Chamativo</label>
+                    <input type="text" name="service_cta_title" id="cms_service_cta_title" class="w-full p-2.5 bg-white border border-emerald-200 rounded-xl font-bold">
+                  </div>
+                  <div class="sm:col-span-2">
+                    <label class="block font-bold text-slate-700 mb-1">Texto Explicativo</label>
+                    <input type="text" name="service_cta_desc" id="cms_service_cta_desc" class="w-full p-2.5 bg-white border border-emerald-200 rounded-xl">
+                  </div>
+                  <div>
+                    <label class="block font-bold text-slate-700 mb-1">Texto do Botão de Envio</label>
+                    <input type="text" name="service_cta_btn" id="cms_service_cta_btn" class="w-full p-2.5 bg-white border border-emerald-200 rounded-xl font-bold text-emerald-700">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex justify-end">
+              <button type="submit" class="px-8 py-3.5 bg-pink-600 hover:bg-pink-700 text-white font-extrabold rounded-2xl text-xs uppercase tracking-wider transition shadow-lg flex items-center gap-2">
+                <i class="fa-solid fa-floppy-disk text-sm"></i>
+                <span>Salvar Serviços Especializados</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+
+        <!-- ========================================================
+             TÓPICO 6: RODAPÉ INSTITUCIONAL & CONFORMIDADE
+             ======================================================== -->
+        <div id="view_cms_footer" class="admin-view hidden space-y-6">
+
+          <!-- Barra de Navegação Rápida entre Tópicos -->
+          <div class="bg-white p-2 rounded-2xl border border-slate-200/80 shadow-2xs flex items-center gap-1.5 overflow-x-auto scrollbar-none text-xs font-bold mb-4">
+            <span class="text-[10px] text-slate-400 uppercase font-black px-2.5 tracking-wider shrink-0 flex items-center gap-1.5">
+              <i class="fa-solid fa-paintbrush text-pink-600"></i> Áreas do Site:
+            </span>
+            
+              <button type="button" onclick="Admin.switchTab('cms_identity')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+                <i class="fa-solid fa-building-columns text-xs"></i>
+                <span>1. Identidade & Contatos</span>
+              </button>
+            
+              <button type="button" onclick="Admin.switchTab('cms_topbar')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+                <i class="fa-solid fa-bullhorn text-xs"></i>
+                <span>2. Topo & Avisos</span>
+              </button>
+            
+              <button type="button" onclick="Admin.switchTab('cms_hero')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+                <i class="fa-solid fa-wand-magic-sparkles text-xs"></i>
+                <span>3. Banner Hero</span>
+              </button>
+            
+              <button type="button" onclick="Admin.switchTab('cms_featured')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+                <i class="fa-solid fa-glasses text-xs"></i>
+                <span>4. Armação Destaque</span>
+              </button>
+            
+              <button type="button" onclick="Admin.switchTab('cms_services')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+                <i class="fa-solid fa-microscope text-xs"></i>
+                <span>5. Serviços Técnicos</span>
+              </button>
+            
+              <button type="button" onclick="Admin.switchTab('cms_footer')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 bg-pink-600 text-white shadow-sm font-extrabold">
+                <i class="fa-solid fa-file-contract text-xs"></i>
+                <span>6. Rodapé Legal</span>
+              </button>
+            
+          </div>
+
+          <!-- Banner Informativo da Seção -->
+          <div class="bg-gradient-to-r from-slate-900 via-pink-950 to-red-950 p-6 rounded-3xl text-white shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <span class="text-[10px] uppercase font-bold tracking-widest text-pink-400 bg-pink-400/10 px-2.5 py-1 rounded-full border border-pink-400/20">
+                Tópico 6 de 6
+              </span>
+              <h2 class="text-xl font-bold mt-2 font-serif-lince">6. Rodapé Institucional & Conformidade Legal</h2>
+              <p class="text-xs text-slate-300 mt-1 max-w-2xl">Personalize o texto sobre a ótica, aviso de direitos autorais e conformidade com o Conselho de Óptica e LGPD.</p>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+              <a href="/" target="_blank" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl transition flex items-center gap-2">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> Ver Site
+              </a>
+              <button type="button" onclick="document.getElementById('cmsForm_footer').requestSubmit()" class="px-5 py-2.5 bg-pink-600 hover:bg-pink-700 text-white text-xs font-bold rounded-xl transition shadow flex items-center gap-2">
+                <i class="fa-solid fa-floppy-disk"></i> Salvar Esta Área
+              </button>
+            </div>
+          </div>
+
+          <form id="cmsForm_footer" class="cms-section-form space-y-6">
+            <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-xs space-y-6 text-xs">
+              <div class="pb-4 border-b border-slate-100">
+                <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
+                  <i class="fa-solid fa-file-contract text-teal-600"></i> Informações Legais & Apresentação Institucional
+                </h3>
+                <p class="text-slate-500">Textos que garantem credibilidade e segurança aos seus clientes no final da página</p>
+              </div>
+
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">Sobre a Ótica (Texto Institucional do Rodapé)</label>
+                <textarea name="footer_about" id="cms_footer_about" rows="3" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none"></textarea>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1">Texto de Direitos Autorais (Copyright)</label>
+                  <input type="text" name="footer_copyright" id="cms_footer_copyright" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none font-medium">
+                </div>
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1">Texto de Conformidade Legal (LGPD / Óptica)</label>
+                  <input type="text" name="footer_compliance" id="cms_footer_compliance" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none font-medium">
+                </div>
+              </div>
+            </div>
+
+            <div class="flex justify-end">
+              <button type="submit" class="px-8 py-3.5 bg-pink-600 hover:bg-pink-700 text-white font-extrabold rounded-2xl text-xs uppercase tracking-wider transition shadow-lg flex items-center gap-2">
+                <i class="fa-solid fa-floppy-disk text-sm"></i>
+                <span>Salvar Rodapé & Textos Legais</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Fallback / Alias view_cms -->
+        <div id="view_cms" class="admin-view hidden"></div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- ========================================================
+       MODAIS ADMINISTRATIVOS
+       ======================================================== -->
+
+  <!-- MODAL 1: NOVO CLIENTE -->
+  <div id="newClientModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm p-4 modal-overlay overflow-y-auto">
+    <div class="relative w-full max-w-xl bg-white rounded-3xl p-6 sm:p-8 shadow-2xl modal-content my-8">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-4">
+        <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
+          <i class="fa-solid fa-user-plus text-lince-red"></i> Cadastrar Novo Cliente
+        </h3>
+        <button data-close-modal="newClientModal" class="text-slate-400 hover:text-slate-700">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <form id="newClientForm" class="space-y-4 text-xs" enctype="multipart/form-data">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Nome Completo do Cliente *</label>
+            <input type="text" name="name" id="clientName" required placeholder="Ex: Maria das Graças" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">CPF</label>
+            <input type="text" name="cpf" id="clientCpf" placeholder="000.000.000-00" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Telefone / WhatsApp *</label>
+            <input type="tel" name="phone" id="clientPhone" required placeholder="(11) 98888-7777" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">E-mail</label>
+            <input type="email" name="email" id="clientEmail" placeholder="cliente@email.com" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Data de Nascimento</label>
+            <input type="date" name="birth_date" id="clientBirth" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Gênero</label>
+            <select name="gender" id="clientGender" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none">
+              <option value="Feminino">Feminino</option>
+              <option value="Masculino">Masculino</option>
+              <option value="Outro">Outro</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Endereço Residencial</label>
+            <input type="text" name="address" id="clientAddress" placeholder="Rua, número, complemento" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Cidade / UF</label>
+            <input type="text" name="city" id="clientCity" value="São Paulo - SP" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none">
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Observações do Cliente</label>
+          <textarea name="notes" id="clientNotes" rows="2" placeholder="Preferências de armação, histórico visual..." class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none"></textarea>
+        </div>
+
+        <!-- SEÇÃO: ANEXAR RECEITA MÉDICA AO CADASTRAR -->
+        <div class="border-t border-slate-200 pt-3">
+          <button type="button" onclick="Admin.toggleNewClientRxSection()" class="w-full p-3 bg-red-50 hover:bg-red-100/80 text-lince-red rounded-xl font-bold flex items-center justify-between transition border border-red-200/60 shadow-2xs">
+            <span class="flex items-center gap-2">
+              <i class="fa-solid fa-file-prescription text-sm"></i>
+              <span>Deseja anexar a Receita Médica agora? (Opcional)</span>
+            </span>
+            <span class="text-xs bg-white text-lince-red px-2 py-0.5 rounded-full border border-red-200 flex items-center gap-1">
+              <span id="newClientRxStatusText">Anexar</span>
+              <i class="fa-solid fa-chevron-down text-[10px]" id="newClientRxChevron"></i>
+            </span>
+          </button>
+
+          <div id="newClientRxSection" class="hidden mt-3 p-4 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
+            <div class="text-[11px] text-slate-500 font-semibold mb-1 flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-info text-lince-red"></i> Anexe a foto ou documento escaneado da receita do oftalmologista:
+            </div>
+
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Foto / Arquivo Escaneado da Receita (PDF ou Imagem) 📎</label>
+              <input type="file" name="client_prescription_file" id="clientPrescriptionFile" accept="image/*,.pdf" class="w-full p-2 bg-white border border-slate-200 rounded-xl text-xs">
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">Médico Oftalmologista</label>
+                <input type="text" name="rx_doctor" placeholder="Dr(a). Nome do Médico" class="w-full p-2 bg-white border border-slate-200 rounded-xl outline-none">
+              </div>
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">CRM / Registro</label>
+                <input type="text" name="rx_crm" placeholder="Ex: CRM/SP 123456" class="w-full p-2 bg-white border border-slate-200 rounded-xl outline-none">
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">Data da Consulta</label>
+                <input type="date" name="rx_exam_date" class="w-full p-2 bg-white border border-slate-200 rounded-xl outline-none">
+              </div>
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">Validade Recomendada</label>
+                <input type="date" name="rx_expiration_date" class="w-full p-2 bg-white border border-slate-200 rounded-xl outline-none">
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">Grau Olho Direito (OD)</label>
+                <input type="number" step="0.25" name="od_spherical" placeholder="Esférico (Ex: -2.00)" class="w-full p-2 bg-white border border-slate-200 rounded-xl outline-none font-mono font-bold">
+              </div>
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">Grau Olho Esquerdo (OE)</label>
+                <input type="number" step="0.25" name="oe_spherical" placeholder="Esférico (Ex: -2.25)" class="w-full p-2 bg-white border border-slate-200 rounded-xl outline-none font-mono font-bold">
+              </div>
+            </div>
+
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Recomendação de Lente (Ex: Multifocal, BlueProtect)</label>
+              <input type="text" name="lens_recommendation" placeholder="Ex: Lente Multifocal HD Freeform com Antirreflexo" class="w-full p-2 bg-white border border-slate-200 rounded-xl outline-none">
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="w-full py-3 bg-lince-red text-white font-bold rounded-xl hover:bg-red-800 transition shadow">
+          Salvar Cliente e Prontuário no Banco de Dados
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 2: PRONTUÁRIO COMPLETO DO CLIENTE -->
+  <div id="clientDetailModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm p-4 modal-overlay overflow-y-auto">
+    <div class="relative w-full max-w-3xl bg-white rounded-3xl p-6 sm:p-8 shadow-2xl modal-content my-8 max-h-[90vh] overflow-y-auto">
+      <button data-close-modal="clientDetailModal" class="absolute top-5 right-5 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center transition">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+      <div id="clientDetailContent">
+        <!-- Preenchido via admin.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 3: NOVA RECEITA OFTALMOLÓGICA -->
+  <div id="newPrescriptionModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm p-4 modal-overlay overflow-y-auto">
+    <div class="relative w-full max-w-2xl bg-white rounded-3xl p-6 sm:p-8 shadow-2xl modal-content my-8 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-4">
+        <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
+          <i class="fa-solid fa-file-prescription text-lince-red"></i> Registrar Receita Oftalmológica no Prontuário
+        </h3>
+        <button data-close-modal="newPrescriptionModal" class="text-slate-400 hover:text-slate-700">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <form id="newPrescriptionForm" class="space-y-4 text-xs" enctype="multipart/form-data">
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Paciente / Cliente *</label>
+          <select name="client_id" id="rxClientIdSelect" required class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none">
+            <!-- Populado via admin.js -->
+          </select>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Médico Oftalmologista / Optometrista</label>
+            <input type="text" name="doctor_name" placeholder="Dr(a). Nome do Médico" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">CRM / Registro Profissional</label>
+            <input type="text" name="crm" placeholder="Ex: CRM/SP 123456" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Data da Consulta</label>
+            <input type="date" name="exam_date" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Validade Recomendada (Geralmente 1 ano)</label>
+            <input type="date" name="expiration_date" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none">
+          </div>
+        </div>
+
+        <!-- Matriz Óptica Clássica -->
+        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+          <span class="font-bold text-slate-800 block mb-2 uppercase text-[10px] tracking-wider">Matriz de Graus (OD e OE):</span>
+          <table class="w-full text-center rx-table">
+            <thead>
+              <tr>
+                <th>Olho</th>
+                <th>Esf (Grau)</th>
+                <th>Cil (Astigmatismo)</th>
+                <th>Eixo (°)</th>
+                <th>Adição</th>
+                <th>DNP (mm)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="rx-badge-od">OD</td>
+                <td><input type="number" step="0.25" name="od_spherical" value="0.00" class="w-full p-1 border rounded text-center font-mono"></td>
+                <td><input type="number" step="0.25" name="od_cylindrical" value="0.00" class="w-full p-1 border rounded text-center font-mono"></td>
+                <td><input type="number" name="od_axis" value="0" class="w-full p-1 border rounded text-center font-mono"></td>
+                <td><input type="number" step="0.25" name="od_addition" value="0.00" class="w-full p-1 border rounded text-center font-mono"></td>
+                <td><input type="number" step="0.5" name="dnp_od" value="31.0" class="w-full p-1 border rounded text-center font-mono"></td>
+              </tr>
+              <tr>
+                <td class="rx-badge-oe">OE</td>
+                <td><input type="number" step="0.25" name="oe_spherical" value="0.00" class="w-full p-1 border rounded text-center font-mono"></td>
+                <td><input type="number" step="0.25" name="oe_cylindrical" value="0.00" class="w-full p-1 border rounded text-center font-mono"></td>
+                <td><input type="number" name="oe_axis" value="0" class="w-full p-1 border rounded text-center font-mono"></td>
+                <td><input type="number" step="0.25" name="oe_addition" value="0.00" class="w-full p-1 border rounded text-center font-mono"></td>
+                <td><input type="number" step="0.5" name="dnp_oe" value="31.0" class="w-full p-1 border rounded text-center font-mono"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Recomendação de Lente (Ex: Multifocal HD, BlueProtect, etc.)</label>
+          <input type="text" name="lens_recommendation" placeholder="Ex: Lente Multifocal Digital com Antirreflexo Premium" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none">
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Anexar Foto da Receita Escaneada</label>
+          <input type="file" name="prescription_file" accept="image/*,.pdf" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-xl text-xs">
+        </div>
+
+        <button type="submit" class="w-full py-3 bg-lince-red text-white font-bold rounded-xl hover:bg-red-800 transition shadow">
+          Salvar Receita no Prontuário do Paciente
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 4: NOVO PRODUTO NO CATÁLOGO -->
+  <div id="newProductModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm p-4 modal-overlay overflow-y-auto">
+    <div class="relative w-full max-w-xl bg-white rounded-3xl p-6 sm:p-8 shadow-2xl modal-content my-8 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-4">
+        <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
+          <i class="fa-solid fa-boxes-stacked text-lince-red"></i> Cadastrar Produto no Catálogo
+        </h3>
+        <button data-close-modal="newProductModal" class="text-slate-400 hover:text-slate-700">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <form id="newProductForm" class="space-y-4 text-xs" enctype="multipart/form-data">
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Nome do Produto *</label>
+          <input type="text" name="name" required placeholder="Ex: Armação Lince Aviator Titânio" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Categoria *</label>
+            <select name="category" required class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none">
+              <option value="armacao_grau">Armação de Grau</option>
+              <option value="oculos_sol">Óculos de Sol</option>
+              <option value="lentes_oftalmicas">Lente Oftálmica</option>
+              <option value="lentes_contato">Lente de Contato</option>
+              <option value="acessorios">Acessório de Óculos</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Marca *</label>
+            <input type="text" name="brand" value="Lince Eyewear" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Formato do Aro</label>
+            <select name="frame_shape" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none">
+              <option value="N/A">Não se aplica (Lente/Acessório)</option>
+              <option value="Hexagonal">Hexagonal</option>
+              <option value="Gatinho">Gatinho (Cat-Eye)</option>
+              <option value="Aviador">Aviador</option>
+              <option value="Redondo">Redondo</option>
+              <option value="Quadrado">Quadrado</option>
+              <option value="Retangular">Retangular</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Material</label>
+            <input type="text" name="material" placeholder="Ex: Acetato Italiano, Titânio, Metal" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Preço Normal (R$) *</label>
+            <input type="number" step="0.01" name="price" required placeholder="490.00" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Preço Promocional (R$)</label>
+            <input type="number" step="0.01" name="promo_price" placeholder="399.00" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Estoque (un)</label>
+            <input type="number" name="in_stock" value="10" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none">
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Descrição Comercial</label>
+          <textarea name="description" rows="2" placeholder="Detalhes de acabamento, estilo e encaixe..." class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none"></textarea>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">URL da Imagem</label>
+            <input type="text" name="image_url" placeholder="https://..." class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Ou Enviar Arquivo de Foto</label>
+            <input type="file" name="product_image" accept="image/*" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-xl text-xs">
+          </div>
+        </div>
+
+        <button type="submit" class="w-full py-3 bg-slate-900 text-white font-bold rounded-xl hover:bg-black transition shadow">
+          Cadastrar Produto no Catálogo
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 5: ADICIONAR / EDITAR LENTE DO SIMULADOR -->
+  <div id="simulatorLensModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm p-4 modal-overlay overflow-y-auto">
+    <div class="relative w-full max-w-lg bg-white rounded-3xl p-6 sm:p-8 shadow-2xl modal-content my-8">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-4">
+        <h3 id="simulatorLensModalTitle" class="font-bold text-slate-900 text-base flex items-center gap-2">
+          <i class="fa-solid fa-glasses text-lince-red"></i> Opção de Lente Oftálmica
+        </h3>
+        <button data-close-modal="simulatorLensModal" class="text-slate-400 hover:text-slate-700">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <form id="simulatorLensForm" class="space-y-4 text-xs">
+        <input type="hidden" name="id" id="lens_modal_id">
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Nome / Tecnologia da Lente *</label>
+          <input type="text" name="name" id="lens_modal_name" required placeholder="Ex: Lentes BlueProtect Antiluz Azul" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Selo / Tag de Destaque</label>
+            <input type="text" name="badge" id="lens_modal_badge" placeholder="Ex: Mais Recomendada, Alta Estética" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Preço de Venda (R$) *</label>
+            <input type="number" step="0.01" name="price" id="lens_modal_price" required placeholder="399.00" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none font-bold">
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Descrição Explicativa (Exibida ao Cliente)</label>
+          <textarea name="description" id="lens_modal_description" rows="2" placeholder="Explicação clara sobre a indicação de grau e benefícios..." class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none"></textarea>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 items-center bg-slate-50 p-3 rounded-xl border border-slate-200">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Ordem na Lista</label>
+            <input type="number" name="order_num" id="lens_modal_order" value="1" min="0" class="w-full p-2 bg-white border border-slate-200 rounded-lg outline-none font-bold">
+          </div>
+          <div class="pt-3 sm:pt-0">
+            <label class="flex items-center gap-2 cursor-pointer font-bold text-slate-800">
+              <input type="checkbox" name="active" id="lens_modal_active" checked class="w-4 h-4 text-lince-red rounded">
+              <span>Disponível no Site (Ativo)</span>
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" id="btnSaveLensModal" class="w-full py-3 bg-lince-red hover:bg-red-800 text-white font-bold rounded-xl transition shadow">
+          Salvar Opção de Lente
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 6: ADICIONAR / EDITAR TRATAMENTO DO SIMULADOR -->
+  <div id="simulatorTreatmentModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm p-4 modal-overlay overflow-y-auto">
+    <div class="relative w-full max-w-lg bg-white rounded-3xl p-6 sm:p-8 shadow-2xl modal-content my-8">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-4">
+        <h3 id="simulatorTreatmentModalTitle" class="font-bold text-slate-900 text-base flex items-center gap-2">
+          <i class="fa-solid fa-shield-halved text-blue-600"></i> Tratamento de Lente
+        </h3>
+        <button data-close-modal="simulatorTreatmentModal" class="text-slate-400 hover:text-slate-700">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <form id="simulatorTreatmentForm" class="space-y-4 text-xs">
+        <input type="hidden" name="id" id="treatment_modal_id">
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Nome do Tratamento / Filtro *</label>
+          <input type="text" name="name" id="treatment_modal_name" required placeholder="Ex: Antirreflexo Premium Diamond" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Preço Adicional (R$) *</label>
+            <input type="number" step="0.01" name="price" id="treatment_modal_price" required placeholder="80.00" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none font-bold">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Ordem na Lista</label>
+            <input type="number" name="order_num" id="treatment_modal_order" value="1" min="0" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none font-bold">
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Descrição Comercial</label>
+          <textarea name="description" id="treatment_modal_description" rows="2" placeholder="Benefício visual percebido pelo cliente..." class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-lince-red outline-none"></textarea>
+        </div>
+
+        <div class="space-y-2 bg-slate-50 p-3 rounded-xl border border-slate-200">
+          <label class="flex items-center gap-2 cursor-pointer font-bold text-slate-800">
+            <input type="checkbox" name="is_default" id="treatment_modal_default" class="w-4 h-4 text-lince-red rounded">
+            <span>Marcar por padrão ao abrir o simulador</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer font-bold text-slate-800">
+            <input type="checkbox" name="is_free" id="treatment_modal_free" class="w-4 h-4 text-emerald-600 rounded">
+            <span>Cortesia / Grátis (Preço R$ 0,00 obrigatório)</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer font-bold text-slate-800">
+            <input type="checkbox" name="active" id="treatment_modal_active" checked class="w-4 h-4 text-lince-red rounded">
+            <span>Ativo no simulador do site</span>
+          </label>
+        </div>
+
+        <button type="submit" id="btnSaveTreatmentModal" class="w-full py-3 bg-slate-900 hover:bg-black text-white font-bold rounded-xl transition shadow">
+          Salvar Tratamento
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 7: ACESSO NA REDE / CELULAR VIA QR CODE (ADMIN) -->
+  <div id="mobileAccessModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm p-4 modal-overlay">
+    <div class="relative w-full max-w-sm bg-white rounded-3xl p-6 sm:p-7 shadow-2xl modal-content text-center">
+      <button data-close-modal="mobileAccessModal" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-400 hover:text-slate-700 flex items-center justify-center transition">
+        <i class="fa-solid fa-xmark text-sm"></i>
+      </button>
+
+      <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center text-xl mx-auto mb-3 border border-amber-200/60 shadow-xs">
+        <i class="fa-solid fa-mobile-screen-button"></i>
+      </div>
+      
+      <h3 class="text-base font-bold text-slate-900 mb-1">Acessar no seu Celular</h3>
+      <p class="text-xs text-slate-500 mb-4">
+        Conecte seu smartphone na <strong>mesma rede Wi-Fi</strong> deste computador e aponte a câmera para o QR Code:
+      </p>
+
+      <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 inline-block mx-auto mb-4 shadow-inner">
+        <img id="adminMobileQrImage" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=http://192.168.2.136:3000/admin" alt="QR Code Admin" class="w-44 h-44 rounded-lg object-contain mx-auto">
+      </div>
+
+      <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-left space-y-1.5 text-xs mb-4">
+        <div class="flex items-center justify-between text-[11px] text-slate-500 font-semibold">
+          <span>Endereço Painel no Celular:</span>
+          <span class="text-emerald-600 font-bold"><i class="fa-solid fa-wifi mr-1"></i> Wi-Fi Ativo</span>
+        </div>
+        <div>
+          <a id="adminMobileAdminLinkDisplay" href="http://192.168.2.136:3000/admin" target="_blank" class="font-mono font-bold text-lince-red hover:underline block truncate text-xs">
+            http://192.168.2.136:3000/admin
+          </a>
+        </div>
+        <div class="pt-1 border-t border-slate-200 text-[10px] text-slate-500 flex items-center justify-between">
+          <span>Ver Vitrine da Loja:</span>
+          <a id="adminMobileLinkDisplay" href="http://192.168.2.136:3000" target="_blank" class="font-mono text-slate-700 hover:text-black font-semibold">
+            http://192.168.2.136:3000
+          </a>
+        </div>
+      </div>
+
+      <button data-close-modal="mobileAccessModal" class="w-full py-2.5 bg-slate-900 hover:bg-black text-white font-bold text-xs rounded-xl transition shadow">
+        Fechar Janela
+      </button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="/js/api.js"></script>
+  <script src="/js/admin.js"></script>
+
+</body>
+</html>
+

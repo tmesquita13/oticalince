@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ótica Lince - Armações, Lentes Oftálmicas, Óculos de Sol & Gestão Óptica</title>
+  <meta name="description" content="Ótica Lince: armações exclusivas, lentes digitais de alto índice, filtro azul, multifocais, óculos de sol, laboratório próprio de montagem e consultoria óptica.">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/images/logo.png">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'lince-red': '#8B1118',
+            'lince-red-dark': '#5a090e',
+            'lince-red-light': '#a81c24',
+            'lince-gold': '#c59b27',
+            'lince-gold-light': '#e5b948',
+            'lince-dark': '#121316',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased selection:bg-red-900 selection:text-white">
+
+  <!-- ========================================================
+       BARRA DE TOPO & AVISO
+       ======================================================== -->
+  <div class="bg-lince-red-dark text-white text-[11px] sm:text-xs py-2 px-4 border-b border-red-950/40">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-1 text-center sm:text-left">
+      <div class="flex items-center gap-2">
+        <span data-cms="topbar_tag" class="bg-amber-400 text-gray-900 font-bold px-1.5 py-0.5 rounded text-[10px] uppercase">Laboratório Digital</span>
+        <span data-cms="topbar_text">Lentes montadas com precisão computadorizada em até 24 horas</span>
+      </div>
+      <div class="flex items-center gap-4 text-gray-300">
+        <span><i class="fa-solid fa-truck-fast mr-1"></i> <span data-cms="topbar_shipping">Frete Grátis acima de R$ 299</span></span>
+        <span class="hidden md:inline">|</span>
+        <span class="hidden md:inline"><i class="fa-solid fa-shield-halved mr-1"></i> <span data-cms="topbar_warranty">2 Anos de Garantia</span></span>
+        <span>|</span>
+        <a data-cms-href="store_phone" href="tel:11987654321" class="hover:text-white font-semibold"><i class="fa-solid fa-phone text-amber-400 mr-1"></i> <span data-cms="store_phone">(11) 98765-4321</span></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       HEADER / NAVBAR
+       ======================================================== -->
+  <header class="sticky top-0 z-50 glass-header border-b border-gray-200/70 shadow-xs transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+      
+      <!-- LOGO ÓTICA LINCE -->
+      <a href="#inicio" class="flex items-center gap-3 group">
+        <div class="h-12 w-auto bg-lince-red p-1 rounded-xl shadow-md flex items-center justify-center overflow-hidden border border-red-800">
+          <img src="/images/logo.png" alt="Ótica Lince" class="h-10 w-auto object-contain">
+        </div>
+        <div class="flex flex-col">
+          <span data-cms="store_name" class="text-xl sm:text-2xl font-black tracking-wider text-lince-red font-serif-lince uppercase leading-none">
+            ÓTICA LINCE
+          </span>
+          <span data-cms="store_slogan" class="text-[10px] tracking-[0.25em] text-gray-400 uppercase font-semibold mt-0.5">
+            Precisão & Elegância
+          </span>
+        </div>
+      </a>
+
+      <!-- MENU DESKTOP -->
+      <nav class="hidden lg:flex items-center gap-7 text-xs font-bold uppercase tracking-wider text-gray-600">
+        <a href="#inicio" class="hover:text-lince-red transition py-1">Início</a>
+        <a href="#catalogo" class="hover:text-lince-red transition py-1">Catálogo & Modelos</a>
+        <a href="#simulador" class="hover:text-lince-red transition py-1 flex items-center gap-1.5 text-lince-red">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> Simulador de Lentes
+        </a>
+        <a href="#visagismo" class="hover:text-lince-red transition py-1">Guia de Rosto</a>
+        <a href="#servicos" class="hover:text-lince-red transition py-1">Serviços da Ótica</a>
+        <a href="/admin" target="_blank" class="text-white bg-lince-red hover:bg-red-800 px-3.5 py-1.5 rounded-xl transition flex items-center gap-1.5 shadow-xs">
+          <i class="fa-solid fa-lock text-xs text-amber-300"></i> Painel da Ótica
+        </a>
+      </nav>
+
+      <!-- CTA WHATSAPP & MOBILE MENU BUTTON -->
+      <div class="flex items-center gap-2.5">
+        <button onclick="App.openUploadPrescriptionModal()" class="hidden md:inline-flex items-center gap-1.5 px-3.5 py-2 bg-red-50 hover:bg-red-100 text-lince-red border border-red-200/80 rounded-xl text-xs font-bold transition">
+          <i class="fa-solid fa-file-prescription"></i> Enviar Receita
+        </button>
+
+        <button onclick="App.openMobileAccessModal()" class="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-900 hover:bg-black text-amber-300 rounded-xl text-xs font-bold shadow-sm transition">
+          <i class="fa-solid fa-mobile-screen-button"></i>
+          <span class="hidden sm:inline">Ver no Celular</span>
+        </button>
+
+        <a 
+          href="https://wa.me/5511987654321?text=Ol%C3%A1%2C%20%C3%93tica%20Lince!%20Gostaria%20de%20tirar%20uma%20d%C3%BAvida%20sobre%20arma%C3%A7%C3%B5es%20e%20lentes." 
+          target="_blank" 
+          class="hidden sm:inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-sm transition hover:shadow"
+        >
+          <i class="fa-brands fa-whatsapp text-base"></i>
+          <span>WhatsApp Ótica</span>
+        </a>
+
+        <!-- Botão Mobile Menu -->
+        <button id="mobileMenuBtn" class="lg:hidden p-2 rounded-lg text-gray-600 hover:text-lince-red hover:bg-gray-100">
+          <i class="fa-solid fa-bars text-xl"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- MENU MOBILE -->
+    <div id="mobileMenu" class="hidden lg:hidden bg-white border-b border-gray-200 px-6 py-4 space-y-3 text-sm font-semibold">
+      <a href="#inicio" class="block py-2 text-gray-700 hover:text-lince-red">Início</a>
+      <a href="#catalogo" class="block py-2 text-gray-700 hover:text-lince-red">Catálogo Completo</a>
+      <a href="#simulador" class="block py-2 text-lince-red font-bold"><i class="fa-solid fa-wand-magic-sparkles mr-2"></i> Simulador de Lentes com Grau</a>
+      <button onclick="App.openUploadPrescriptionModal()" class="block w-full text-left py-2 text-lince-red font-bold"><i class="fa-solid fa-file-prescription mr-2"></i> Enviar Receita Médica (Upload Foto/PDF)</button>
+      <a href="#visagismo" class="block py-2 text-gray-700 hover:text-lince-red">Guia de Formato de Rosto</a>
+      <a href="#servicos" class="block py-2 text-gray-700 hover:text-lince-red">Serviços da Ótica</a>
+      <button onclick="App.openMobileAccessModal()" class="block w-full text-left py-2 text-amber-600 font-bold">
+        <i class="fa-solid fa-qrcode mr-2"></i> QR Code para Acessar no Celular
+      </button>
+      <a href="/admin" target="_blank" class="block py-2 text-lince-red font-bold"><i class="fa-solid fa-lock mr-2"></i> Painel de Gestão da Ótica (Admin)</a>
+      <div class="pt-2">
+        <a href="https://wa.me/5511987654321" target="_blank" class="block w-full py-2.5 bg-emerald-600 text-white text-center rounded-xl font-bold">
+          <i class="fa-brands fa-whatsapp mr-2"></i> Falar no WhatsApp
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================
+       HERO SECTION
+       ======================================================== -->
+  <section id="inicio" class="relative overflow-hidden bg-gradient-to-br from-red-950 via-[#790b12] to-lince-red text-white py-16 sm:py-24">
+    <!-- Fundo decorativo sutil -->
+    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:24px_24px]"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- Texto de Apresentação -->
+        <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+          <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20 text-xs font-semibold text-amber-200">
+            <i class="fa-solid fa-award"></i> <span data-cms="hero_badge">Excelência e Tradição Óptica</span>
+          </div>
+
+          <h1 data-cms="hero_title" class="text-4xl sm:text-5xl lg:text-6xl font-black font-serif-lince tracking-tight leading-[1.15]">
+            Sua visão com a precisão e a elegância de um Lince.
+          </h1>
+
+          <p data-cms="hero_subtitle" class="text-gray-200 text-base sm:text-lg max-w-xl mx-auto lg:mx-0 leading-relaxed font-normal">
+            Catálogo exclusivo de armações nobres, óculos de sol polarizados, lentes digitais de alto índice com filtro de luz azul e laboratório de montagem computadorizado.
+          </p>
+
+          <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
+            <a href="#catalogo" class="px-6 py-3.5 bg-white text-lince-red hover:bg-amber-100 font-extrabold text-xs uppercase tracking-wider rounded-xl transition shadow-lg flex items-center gap-2">
+              <i class="fa-solid fa-glasses"></i> <span data-cms="hero_btn_catalog">Explorar Catálogo</span>
+            </a>
+            <a href="#simulador" class="px-6 py-3.5 bg-amber-500 hover:bg-amber-400 text-gray-900 font-extrabold text-xs uppercase tracking-wider rounded-xl transition shadow-lg flex items-center gap-2">
+              <i class="fa-solid fa-calculator"></i> <span data-cms="hero_btn_simulator">Simular Lentes & Grau</span>
+            </a>
+            <button type="button" onclick="App.openUploadPrescriptionModal()" class="px-6 py-3.5 bg-white/10 hover:bg-white/20 backdrop-blur border border-white/30 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition flex items-center gap-2">
+              <i class="fa-solid fa-file-prescription text-amber-300"></i> <span data-cms="hero_btn_prescription">Orçar Receita Médica</span>
+            </button>
+          </div>
+
+          <!-- Diferenciais rápidos -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-white/15 text-left">
+            <div>
+              <div data-cms="hero_stat1_val" class="text-xl font-extrabold text-amber-300">100%</div>
+              <div data-cms="hero_stat1_label" class="text-[11px] text-gray-300 leading-tight">Proteção UV400 em todas as lentes</div>
+            </div>
+            <div>
+              <div data-cms="hero_stat2_val" class="text-xl font-extrabold text-amber-300">10x</div>
+              <div data-cms="hero_stat2_label" class="text-[11px] text-gray-300 leading-tight">Sem juros no cartão de crédito</div>
+            </div>
+            <div>
+              <div data-cms="hero_stat3_val" class="text-xl font-extrabold text-amber-300">2 Anos</div>
+              <div data-cms="hero_stat3_label" class="text-[11px] text-gray-300 leading-tight">Garantia total de fabricação</div>
+            </div>
+            <div>
+              <div data-cms="hero_stat4_val" class="text-xl font-extrabold text-amber-300">Digital</div>
+              <div data-cms="hero_stat4_label" class="text-[11px] text-gray-300 leading-tight">Prontuário e receitas salvos online</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Banner Visual / Card Destaque -->
+        <div class="lg:col-span-5 flex justify-center">
+          <div class="relative w-full max-w-md bg-white/10 backdrop-blur-xl p-6 sm:p-8 rounded-3xl border border-white/25 shadow-2xl text-center">
+            
+            <div data-cms="hero_featured_badge" class="absolute -top-4 -right-4 bg-amber-400 text-gray-950 font-black text-xs uppercase tracking-wider px-4 py-1.5 rounded-full shadow-lg">
+              Lançamento 2026
+            </div>
+
+            <div class="h-56 flex items-center justify-center p-4">
+              <img 
+                data-cms-src="hero_featured_image"
+                src="https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=800&q=80" 
+                alt="Armação Destaque Lince Imperial" 
+                class="max-h-48 max-w-full object-contain filter drop-shadow-[0_15px_15px_rgba(0,0,0,0.5)] transform -rotate-6 hover:rotate-0 transition duration-500"
+              />
+            </div>
+
+            <div class="text-left bg-black/30 p-4 rounded-2xl border border-white/10 mt-2">
+              <span data-cms="hero_featured_collection" class="text-[10px] uppercase font-bold text-amber-300 tracking-wider">Coleção Signature</span>
+              <h3 data-cms="hero_featured_title" class="text-lg font-bold text-white leading-tight">Armação Lince Titanium Imperial</h3>
+              <p data-cms="hero_featured_desc" class="text-xs text-gray-300 mt-1">Titânio puro cirúrgico ultraleve (11g) com aro hexagonal polido à mão.</p>
+              
+              <div class="flex items-center justify-between mt-3 pt-3 border-t border-white/10">
+                <div>
+                  <span data-cms="hero_featured_old_price" class="text-xs text-gray-400 line-through">R$ 589,00</span>
+                  <div data-cms="hero_featured_price" class="text-xl font-extrabold text-amber-300">R$ 499,00</div>
+                </div>
+                <button onclick="Simulator.startWithFrame(1)" class="px-4 py-2 bg-white text-lince-red font-bold text-xs rounded-xl hover:bg-amber-100 transition shadow">
+                  Montar com Grau
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       SEÇÃO: VITRINE VIRTUAL / CATÁLOGO COMPLETO
+       ======================================================== -->
+  <section id="catalogo" class="py-16 sm:py-20 bg-gray-50 border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Cabeçalho da Seção -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+        <div>
+          <div class="inline-flex items-center gap-1.5 text-lince-red text-xs font-bold uppercase tracking-widest mb-1">
+            <i class="fa-solid fa-glasses"></i> Vitrine Completa
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 font-serif-lince">
+            Modelos de Armações, Lentes & Acessórios
+          </h2>
+          <p class="text-gray-500 text-sm max-w-2xl mt-1">
+            Navegue por nossas coleções completas. Filtre por formato do rosto, tipo de lente, material ou estilo.
+          </p>
+        </div>
+
+        <div id="productCountBadge" class="text-xs font-semibold text-gray-400 bg-white px-3 py-1.5 rounded-full border border-gray-200 self-start md:self-auto">
+          Carregando catálogo...
+        </div>
+      </div>
+
+      <!-- ABAS DE CATEGORIAS -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-4 mb-6 scrollbar-none">
+        <button data-category="all" class="tab-btn active px-5 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap border border-gray-200 bg-white transition flex items-center gap-2">
+          <i class="fa-solid fa-border-all"></i> Todos os Modelos
+        </button>
+        <button data-category="armacao_grau" class="tab-btn px-5 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap border border-gray-200 bg-white text-gray-700 hover:border-lince-red transition flex items-center gap-2">
+          <i class="fa-solid fa-glasses"></i> Armações de Grau
+        </button>
+        <button data-category="oculos_sol" class="tab-btn px-5 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap border border-gray-200 bg-white text-gray-700 hover:border-lince-red transition flex items-center gap-2">
+          <i class="fa-solid fa-sun"></i> Óculos de Sol
+        </button>
+        <button data-category="lentes_oftalmicas" class="tab-btn px-5 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap border border-gray-200 bg-white text-gray-700 hover:border-lince-red transition flex items-center gap-2">
+          <i class="fa-solid fa-eye"></i> Lentes Oftálmicas
+        </button>
+        <button data-category="lentes_contato" class="tab-btn px-5 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap border border-gray-200 bg-white text-gray-700 hover:border-lince-red transition flex items-center gap-2">
+          <i class="fa-solid fa-circle-dot"></i> Lentes de Contato
+        </button>
+        <button data-category="acessorios" class="tab-btn px-5 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap border border-gray-200 bg-white text-gray-700 hover:border-lince-red transition flex items-center gap-2">
+          <i class="fa-solid fa-spray-can-sparkles"></i> Acessórios & Estojos
+        </button>
+      </div>
+
+      <!-- BARRA DE FILTROS & BUSCA RÁPIDA -->
+      <div class="bg-white p-4 rounded-2xl border border-gray-200/80 shadow-xs mb-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3 items-center">
+          
+          <!-- Busca por texto -->
+          <div class="lg:col-span-5 relative">
+            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+            <input 
+              type="text" 
+              id="catalogSearch" 
+              placeholder="Buscar por modelo, cor, material (ex: titânio, aviador, azul)..." 
+              class="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs text-gray-800 placeholder-gray-400 focus:outline-none focus:border-lince-red focus:bg-white transition"
+            />
+          </div>
+
+          <!-- Filtro por Formato da Armação -->
+          <div class="lg:col-span-3">
+            <select id="filterShape" class="w-full py-2.5 px-3 bg-gray-50 border border-gray-200 rounded-xl text-xs text-gray-700 focus:outline-none focus:border-lince-red focus:bg-white transition">
+              <option value="all">Formato: Todos os Formatos</option>
+              <option value="Hexagonal">Hexagonal / Geométrico</option>
+              <option value="Gatinho">Gatinho (Cat-Eye)</option>
+              <option value="Aviador">Aviador</option>
+              <option value="Redondo">Redondo</option>
+              <option value="Quadrado">Quadrado</option>
+              <option value="Retangular">Retangular</option>
+            </select>
+          </div>
+
+          <!-- Filtro por Gênero -->
+          <div class="lg:col-span-2">
+            <select id="filterGender" class="w-full py-2.5 px-3 bg-gray-50 border border-gray-200 rounded-xl text-xs text-gray-700 focus:outline-none focus:border-lince-red focus:bg-white transition">
+              <option value="all">Gênero: Todos</option>
+              <option value="Feminino">Feminino</option>
+              <option value="Masculino">Masculino</option>
+              <option value="Unissex">Unissex</option>
+              <option value="Infantil">Infantil</option>
+            </select>
+          </div>
+
+          <!-- Ordenação -->
+          <div class="lg:col-span-2">
+            <select id="filterSort" class="w-full py-2.5 px-3 bg-gray-50 border border-gray-200 rounded-xl text-xs text-gray-700 focus:outline-none focus:border-lince-red focus:bg-white transition">
+              <option value="default">Ordenar: Destaques</option>
+              <option value="price_asc">Menor Preço</option>
+              <option value="price_desc">Maior Preço</option>
+              <option value="name">Nome A-Z</option>
+            </select>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- GRID DE PRODUTOS DINÂMICO -->
+      <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <!-- Preenchido via catalog.js -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================
+       SEÇÃO: SIMULADOR DE LENTES COM GRAU & ORÇAMENTO
+       ======================================================== -->
+  <section id="simulador" class="py-16 sm:py-24 bg-white border-b border-gray-200">
+    <div id="simulatorSection" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Cabeçalho do Simulador -->
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <div class="inline-flex items-center gap-2 bg-red-50 text-lince-red px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-2">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> Monte seu Óculos Completo
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-black text-gray-900 font-serif-lince">
+          Simulador de Lentes & Orçamento Inteligente
+        </h2>
+        <p class="text-gray-500 text-sm mt-2">
+          Combine a armação ideal com o tipo de lente prescrita pelo seu oftalmologista, escolha os tratamentos e receba o orçamento calculado em tempo real com opção de enviar para o WhatsApp da ótica!
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- COLUNA ESQUERDA: ETAPAS DE CONFIGURAÇÃO -->
+        <div class="lg:col-span-8 space-y-8">
+          
+          <!-- ETAPA 1: ARMAÇÃO SELECIONADA -->
+          <div class="bg-gray-50 p-6 rounded-2xl border border-gray-200">
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center gap-3">
+                <span class="step-circle active text-xs">1</span>
+                <div>
+                  <h3 class="font-bold text-gray-900 text-sm sm:text-base">Armação Selecionada</h3>
+                  <p class="text-xs text-gray-500">Escolha a armação de grau que irá receber as lentes</p>
+                </div>
+              </div>
+              <button onclick="Simulator.changeFrameModal()" class="text-xs font-bold text-lince-red hover:underline flex items-center gap-1">
+                <i class="fa-solid fa-arrows-rotate"></i> Trocar Modelo
+              </button>
+            </div>
+            
+            <div id="simSelectedFrameContainer">
+              <!-- Renderizado via simulator.js -->
+            </div>
+          </div>
+
+          <!-- ETAPA 2: ESCOLHA DO TIPO DE LENTE -->
+          <div class="bg-gray-50 p-6 rounded-2xl border border-gray-200">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="step-circle active text-xs">2</span>
+              <div>
+                <h3 class="font-bold text-gray-900 text-sm sm:text-base">Escolha o Tipo de Lente Oftálmica</h3>
+                <p class="text-xs text-gray-500">Tecnologias ópticas fabricadas em laboratório digital de precisão</p>
+              </div>
+            </div>
+
+            <div id="simLensOptions" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <!-- Renderizado via simulator.js -->
+            </div>
+          </div>
+
+          <!-- ETAPA 3: TRATAMENTOS ADICIONAIS -->
+          <div class="bg-gray-50 p-6 rounded-2xl border border-gray-200">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="step-circle active text-xs">3</span>
+              <div>
+                <h3 class="font-bold text-gray-900 text-sm sm:text-base">Tratamentos & Películas de Proteção</h3>
+                <p class="text-xs text-gray-500">Aumente a durabilidade e o conforto visual das suas lentes</p>
+              </div>
+            </div>
+
+            <div id="simTreatmentsContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+              <!-- Renderizado dinamicamente via simulator.js a partir do banco de dados -->
+            </div>
+          </div>
+
+          <!-- ETAPA 4: PRESCRIÇÃO / GRAU -->
+          <div class="bg-gray-50 p-6 rounded-2xl border border-gray-200">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="step-circle active text-xs">4</span>
+              <div>
+                <h3 class="font-bold text-gray-900 text-sm sm:text-base">Dados da Receita de Óculos (Opcional no momento)</h3>
+                <p class="text-xs text-gray-500">Se preferir, pode anexar a foto da receita ou enviar depois pelo WhatsApp</p>
+              </div>
+            </div>
+
+            <!-- Botão de Anexo Direto da Receita Médica -->
+            <div class="mb-4 p-3.5 bg-red-50/80 border border-red-200/90 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 bg-white text-lince-red rounded-xl flex items-center justify-center text-base border border-red-200 shadow-2xs shrink-0">
+                  <i class="fa-solid fa-file-prescription"></i>
+                </div>
+                <div>
+                  <span class="font-bold text-slate-800 text-xs block">Prefere anexar a foto ou PDF da sua receita?</span>
+                  <span class="text-[11px] text-slate-500">Nossa equipe calcula os graus exatos pelo arquivo escaneado.</span>
+                </div>
+              </div>
+              <button type="button" onclick="App.openUploadPrescriptionModal()" class="px-4 py-2 bg-lince-red hover:bg-red-800 text-white font-bold text-xs rounded-xl transition shadow-xs shrink-0 flex items-center justify-center gap-1.5">
+                <i class="fa-solid fa-cloud-arrow-up"></i> Anexar Receita (Upload)
+              </button>
+            </div>
+
+            <!-- Tabela de preenchimento de grau -->
+            <div class="overflow-x-auto bg-white p-4 rounded-xl border border-gray-200">
+              <table class="w-full text-xs rx-table">
+                <thead>
+                  <tr>
+                    <th>Olho</th>
+                    <th>Esférico (Miopia/Hipermetropia)</th>
+                    <th>Cilíndrico (Astigmatismo)</th>
+                    <th>Eixo (0° a 180°)</th>
+                    <th>Adição (Perto)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="rx-badge-od">Olho Direito (OD)</td>
+                    <td><input type="text" id="sim_od_spherical" placeholder="-2.00" class="w-full text-center p-1.5 border border-gray-300 rounded font-mono font-bold"></td>
+                    <td><input type="text" id="sim_od_cylindrical" placeholder="-0.50" class="w-full text-center p-1.5 border border-gray-300 rounded font-mono"></td>
+                    <td><input type="text" id="sim_od_axis" placeholder="90°" class="w-full text-center p-1.5 border border-gray-300 rounded font-mono"></td>
+                    <td rowspan="2" class="align-middle">
+                      <input type="text" id="sim_addition" placeholder="+2.00" class="w-full text-center p-1.5 border border-gray-300 rounded font-mono">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="rx-badge-oe">Olho Esquerdo (OE)</td>
+                    <td><input type="text" id="sim_oe_spherical" placeholder="-2.25" class="w-full text-center p-1.5 border border-gray-300 rounded font-mono font-bold"></td>
+                    <td><input type="text" id="sim_oe_cylindrical" placeholder="-0.50" class="w-full text-center p-1.5 border border-gray-300 rounded font-mono"></td>
+                    <td><input type="text" id="sim_oe_axis" placeholder="85°" class="w-full text-center p-1.5 border border-gray-300 rounded font-mono"></td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="text-[11px] text-gray-400 mt-2 flex items-center gap-1.5">
+                <i class="fa-solid fa-circle-info text-lince-red"></i> Não sabe preencher? Não se preocupe! Nossos optometristas conferem a receita oficial com você.
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- COLUNA DIREITA: RESUMO DO ORÇAMENTO (STICKY) -->
+        <div class="lg:col-span-4 sticky top-24">
+          <div class="bg-white p-6 rounded-3xl border-2 border-lince-red/30 shadow-xl space-y-6">
+            
+            <div class="flex items-center justify-between border-b border-gray-100 pb-4">
+              <span class="text-xs font-bold uppercase tracking-wider text-lince-red flex items-center gap-1.5">
+                <i class="fa-solid fa-receipt"></i> Resumo do Orçamento
+              </span>
+              <span class="text-[11px] bg-red-50 text-lince-red font-bold px-2 py-0.5 rounded-full">
+                Cálculo em Tempo Real
+              </span>
+            </div>
+
+            <!-- Detalhamento de valores -->
+            <div class="space-y-3 text-xs text-gray-600">
+              <div class="flex justify-between items-center">
+                <span>Armação Selecionada:</span>
+                <span id="simBreakdownFrame" class="font-bold text-gray-900">R$ 0,00</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span>Lentes Oftálmicas:</span>
+                <span id="simBreakdownLens" class="font-bold text-gray-900">R$ 0,00</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span>Tratamentos & Extras:</span>
+                <span id="simBreakdownTreatments" class="font-bold text-gray-900">R$ 0,00</span>
+              </div>
+              <div class="flex justify-between items-center text-emerald-700">
+                <span>Montagem & Alinhamento Óptico:</span>
+                <span id="simAssemblyFeeDisplay" class="font-bold uppercase text-[10px] bg-emerald-50 px-2 py-0.5 rounded">Cortesia</span>
+              </div>
+            </div>
+
+            <!-- Valor Total -->
+            <div class="bg-gradient-to-br from-red-50 to-gray-50 p-4 rounded-2xl border border-red-100 text-center">
+              <span class="text-xs text-gray-500 font-semibold block">Valor Total Estimado</span>
+              <div id="simTotalDisplay" class="text-3xl font-black text-lince-red my-1">R$ 0,00</div>
+              <span id="simInstallmentsDisplay" class="text-xs text-gray-600 font-medium block">ou 10x de R$ 0,00 sem juros</span>
+              <span id="simPixDiscountDisplay" class="text-[11px] text-emerald-700 font-bold block mt-1">5% de desconto no Pix à vista</span>
+            </div>
+
+            <!-- Dados do Cliente para envio -->
+            <div class="space-y-3 text-xs">
+              <span class="font-bold text-gray-800 block uppercase tracking-wider text-[11px]">Para quem é o orçamento?</span>
+              <div>
+                <input type="text" id="simClientName" placeholder="Seu Nome Completo *" class="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:border-lince-red focus:bg-white outline-none">
+              </div>
+              <div>
+                <input type="tel" id="simClientPhone" placeholder="Seu WhatsApp com DDD (Ex: 11 99999-9999) *" class="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:border-lince-red focus:bg-white outline-none">
+              </div>
+              <div>
+                <textarea id="simClientNotes" rows="2" placeholder="Alguma dúvida ou detalhe da receita? (Opcional)" class="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:border-lince-red focus:bg-white outline-none"></textarea>
+              </div>
+            </div>
+
+            <!-- Botão de Ação -->
+            <button id="btnSubmitQuote" class="w-full py-3.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-2xl text-xs sm:text-sm uppercase tracking-wider transition shadow-lg flex items-center justify-center gap-2">
+              <i class="fa-brands fa-whatsapp text-lg"></i> Gerar Orçamento & Enviar p/ WhatsApp
+            </button>
+
+            <div class="text-[11px] text-center text-gray-400">
+              <i class="fa-solid fa-lock text-gray-400 mr-1"></i> Seus dados são salvos em nosso banco protegido de acordo com a LGPD.
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================
+       SEÇÃO: GUIA DE FORMATO DE ROSTO & VISAGISMO ÓPTICO
+       ======================================================== -->
+  <section id="visagismo" class="py-16 sm:py-24 bg-gray-50 border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <div class="inline-flex items-center gap-2 text-lince-red text-xs font-bold uppercase tracking-widest mb-1">
+          <i class="fa-solid fa-face-smile"></i> Visagismo Óptico Lince
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-black text-gray-900 font-serif-lince">
+          Qual a Armação Ideal Para o Seu Rosto?
+        </h2>
+        <p class="text-gray-500 text-sm mt-2">
+          Cada traço anatômico harmoniza com determinados formatos de aros. Clique no seu formato de rosto abaixo para descobrir recomendações sob medida!
+        </p>
+      </div>
+
+      <!-- Seleção de Formatos de Rosto -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
+        
+        <div data-face-shape="oval" class="face-shape-card bg-white p-5 rounded-2xl border border-gray-200 text-center shadow-xs">
+          <div class="w-12 h-12 mx-auto mb-3 bg-red-50 text-lince-red rounded-xl flex items-center justify-center text-2xl">
+            <i class="fa-solid fa-egg"></i>
+          </div>
+          <h4 class="font-bold text-gray-900 text-sm">Oval</h4>
+          <span class="text-[11px] text-gray-400 block mt-0.5">Versátil e equilibrado</span>
+        </div>
+
+        <div data-face-shape="redondo" class="face-shape-card bg-white p-5 rounded-2xl border border-gray-200 text-center shadow-xs">
+          <div class="w-12 h-12 mx-auto mb-3 bg-red-50 text-lince-red rounded-xl flex items-center justify-center text-2xl">
+            <i class="fa-regular fa-circle"></i>
+          </div>
+          <h4 class="font-bold text-gray-900 text-sm">Redondo</h4>
+          <span class="text-[11px] text-gray-400 block mt-0.5">Traços suaves</span>
+        </div>
+
+        <div data-face-shape="quadrado" class="face-shape-card bg-white p-5 rounded-2xl border border-gray-200 text-center shadow-xs">
+          <div class="w-12 h-12 mx-auto mb-3 bg-red-50 text-lince-red rounded-xl flex items-center justify-center text-2xl">
+            <i class="fa-regular fa-square"></i>
+          </div>
+          <h4 class="font-bold text-gray-900 text-sm">Quadrado</h4>
+          <span class="text-[11px] text-gray-400 block mt-0.5">Maxilar marcado</span>
+        </div>
+
+        <div data-face-shape="coracao" class="face-shape-card bg-white p-5 rounded-2xl border border-gray-200 text-center shadow-xs">
+          <div class="w-12 h-12 mx-auto mb-3 bg-red-50 text-lince-red rounded-xl flex items-center justify-center text-2xl">
+            <i class="fa-regular fa-heart"></i>
+          </div>
+          <h4 class="font-bold text-gray-900 text-sm">Coração</h4>
+          <span class="text-[11px] text-gray-400 block mt-0.5">Queixo estreito</span>
+        </div>
+
+        <div data-face-shape="diamante" class="face-shape-card bg-white p-5 rounded-2xl border border-gray-200 text-center shadow-xs">
+          <div class="w-12 h-12 mx-auto mb-3 bg-red-50 text-lince-red rounded-xl flex items-center justify-center text-2xl">
+            <i class="fa-regular fa-gem"></i>
+          </div>
+          <h4 class="font-bold text-gray-900 text-sm">Diamante</h4>
+          <span class="text-[11px] text-gray-400 block mt-0.5">Maçãs salientes</span>
+        </div>
+
+      </div>
+
+      <!-- Informações Dinâmicas de Visagismo -->
+      <div id="faceGuideInfo" class="max-w-3xl mx-auto">
+        <!-- Renderizado via faceGuide.js -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================
+       SEÇÃO: SERVIÇOS ESPECIALIZADOS DA ÓTICA LINCE
+       ======================================================== -->
+  <section id="servicos" class="py-16 sm:py-24 bg-white border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Cabeçalho de Serviços -->
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <div class="inline-flex items-center gap-2 bg-red-50 text-lince-red px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-2">
+          <i class="fa-solid fa-screwdriver-wrench"></i> <span data-cms="services_tag">Experiência & Precisão Óptica</span>
+        </div>
+        <h2 data-cms="services_title" class="text-3xl sm:text-4xl font-black text-gray-900 font-serif-lince">
+          Serviços Especializados da Ótica Lince
+        </h2>
+        <p data-cms="services_subtitle" class="text-gray-500 text-sm mt-2">
+          Muito além da venda de óculos: tecnologia de laboratório próprio, conferência rigorosa de receitas médicas, ajuste anatômico sob medida e assistência vitalícia.
+        </p>
+      </div>
+
+      <!-- Grade de 4 Serviços Core da Ótica -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        
+        <!-- Serviço 1: Laboratório Digital -->
+        <div class="bg-gray-50 p-6 rounded-3xl border border-gray-200/80 hover:border-lince-red hover:shadow-md transition duration-300 flex flex-col justify-between">
+          <div>
+            <div class="w-14 h-14 bg-red-100 text-lince-red rounded-2xl flex items-center justify-center text-2xl mb-4">
+              <i class="fa-solid fa-microchip"></i>
+            </div>
+            <h3 data-cms="service1_title" class="font-bold text-gray-900 text-base mb-2">Laboratório Digital Próprio</h3>
+            <p data-cms="service1_desc" class="text-xs text-gray-600 leading-relaxed">
+              Desbaste computadorizado e biselamento 3D de alta precisão. Montagem rápida em até 24 horas mantendo o alinhamento óptico exato prescrito na receita.
+            </p>
+          </div>
+          <div class="pt-4 mt-4 border-t border-gray-200 text-[11px] font-bold text-lince-red flex items-center gap-1">
+            <i class="fa-solid fa-check"></i> <span data-cms="service1_badge">Calibragem Ponto a Ponto</span>
+          </div>
+        </div>
+
+        <!-- Serviço 2: Pupilômetro Digital -->
+        <div class="bg-gray-50 p-6 rounded-3xl border border-gray-200/80 hover:border-lince-red hover:shadow-md transition duration-300 flex flex-col justify-between">
+          <div>
+            <div class="w-14 h-14 bg-amber-100 text-amber-700 rounded-2xl flex items-center justify-center text-2xl mb-4">
+              <i class="fa-solid fa-ruler-combined"></i>
+            </div>
+            <h3 data-cms="service2_title" class="font-bold text-gray-900 text-base mb-2">Medição Digital de DNP</h3>
+            <p data-cms="service2_desc" class="text-xs text-gray-600 leading-relaxed">
+              Tiragem computadorizada da Distância Naso-Pupilar (DNP) e altura de montagem. Fundamental para o sucesso e adaptação imediata de lentes multifocais.
+            </p>
+          </div>
+          <div class="pt-4 mt-4 border-t border-gray-200 text-[11px] font-bold text-amber-700 flex items-center gap-1">
+            <i class="fa-solid fa-check"></i> <span data-cms="service2_badge">Precisão em Décimos de Milímetro</span>
+          </div>
+        </div>
+
+        <!-- Serviço 3: Ajuste & Manutenção Vitalícia -->
+        <div class="bg-gray-50 p-6 rounded-3xl border border-gray-200/80 hover:border-lince-red hover:shadow-md transition duration-300 flex flex-col justify-between">
+          <div>
+            <div class="w-14 h-14 bg-blue-100 text-blue-700 rounded-2xl flex items-center justify-center text-2xl mb-4">
+              <i class="fa-solid fa-wand-magic-sparkles"></i>
+            </div>
+            <h3 data-cms="service3_title" class="font-bold text-gray-900 text-base mb-2">Ajuste & Manutenção Vitalícia</h3>
+            <p data-cms="service3_desc" class="text-xs text-gray-600 leading-relaxed">
+              Alinhamento de hastes, troca de plaquetas de silicone hipoalergênicas, reaperto de parafusos ópticos e limpeza por ultrassom sem nenhum custo aos nossos clientes.
+            </p>
+          </div>
+          <div class="pt-4 mt-4 border-t border-gray-200 text-[11px] font-bold text-blue-700 flex items-center gap-1">
+            <i class="fa-solid fa-check"></i> <span data-cms="service3_badge">Cortesia Gratuita na Loja</span>
+          </div>
+        </div>
+
+        <!-- Serviço 4: Consultoria de Receitas -->
+        <div class="bg-gray-50 p-6 rounded-3xl border border-gray-200/80 hover:border-lince-red hover:shadow-md transition duration-300 flex flex-col justify-between">
+          <div>
+            <div class="w-14 h-14 bg-emerald-100 text-emerald-700 rounded-2xl flex items-center justify-center text-2xl mb-4">
+              <i class="fa-solid fa-file-medical"></i>
+            </div>
+            <h3 data-cms="service4_title" class="font-bold text-gray-900 text-base mb-2">Análise de Receita Médica</h3>
+            <p data-cms="service4_desc" class="text-xs text-gray-600 leading-relaxed">
+              Traga ou envie a receita do seu oftalmologista. Nossos consultores ópticos indicam o índice de refração e tratamentos ideais para lentes finas e sem distorções.
+            </p>
+          </div>
+          <div class="pt-4 mt-4 border-t border-gray-200 text-[11px] font-bold text-emerald-700 flex items-center gap-1">
+            <i class="fa-solid fa-check"></i> <span data-cms="service4_badge">Consultoria Especializada</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Banner de Ação: Envie sua Receita pelo WhatsApp -->
+      <div class="bg-gradient-to-r from-red-950 via-lince-red to-red-900 rounded-3xl p-8 sm:p-10 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
+        <div class="space-y-2 text-center md:text-left">
+          <span data-cms="service_cta_tag" class="text-xs font-bold uppercase tracking-wider text-amber-300">Tem uma receita em mãos?</span>
+          <h3 data-cms="service_cta_title" class="text-2xl sm:text-3xl font-black font-serif-lince">Envie uma foto para o nosso WhatsApp</h3>
+          <p data-cms="service_cta_desc" class="text-xs sm:text-sm text-gray-200 max-w-xl">
+            Calculamos na hora o orçamento das lentes ideais para o seu grau com simulação de espessura e tratamentos antirreflexo e luz azul.
+          </p>
+        </div>
+        <div class="flex flex-col sm:flex-row items-center gap-3 shrink-0">
+          <button 
+            type="button"
+            onclick="App.openUploadPrescriptionModal()" 
+            class="w-full sm:w-auto px-6 py-4 bg-white text-lince-red hover:bg-amber-50 font-black text-xs uppercase tracking-wider rounded-2xl transition shadow-lg flex items-center justify-center gap-2 whitespace-nowrap"
+          >
+            <i class="fa-solid fa-cloud-arrow-up text-lg text-lince-red"></i>
+            <span data-cms="service_cta_btn">Enviar Foto da Receita</span>
+          </button>
+
+          <a 
+            data-cms-href="store_whatsapp"
+            href="https://wa.me/5511987654321?text=Ol%C3%A1%2C%20%C3%93tica%20Lince!%20Gostaria%20de%20enviar%20uma%20foto%20da%20minha%20receita%20m%C3%A9dica%20para%20voc%C3%AAs%20calcularem%20as%20op%C3%A7%C3%B5es%20de%20lente." 
+            target="_blank" 
+            class="w-full sm:w-auto px-5 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs uppercase tracking-wider rounded-2xl transition shadow-lg flex items-center justify-center gap-2 whitespace-nowrap"
+          >
+            <i class="fa-brands fa-whatsapp text-lg"></i>
+            <span>WhatsApp</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+
+  <!-- ========================================================
+       FOOTER
+       ======================================================== -->
+  <footer class="bg-lince-dark text-white pt-16 pb-12 border-t border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-gray-800">
+        
+        <!-- Coluna 1: Marca -->
+        <div class="lg:col-span-2 space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="h-12 w-auto bg-lince-red p-1 rounded-xl flex items-center justify-center border border-red-800">
+              <img src="/images/logo.png" alt="Ótica Lince" class="h-10 w-auto object-contain">
+            </div>
+            <span class="text-2xl font-black tracking-wider text-white font-serif-lince uppercase">
+              ÓTICA LINCE
+            </span>
+          </div>
+          <p data-cms="footer_about" class="text-xs text-gray-400 max-w-sm leading-relaxed">
+            Excelência óptica em armações premium, óculos solares e lentes de alta definição tecnológica. Cuidando da saúde dos seus olhos com precisão e sofisticação.
+          </p>
+          <div class="flex items-center gap-3 text-gray-400 pt-2">
+            <a data-cms-href="store_instagram" href="#" class="w-8 h-8 rounded-full bg-gray-800 hover:bg-lince-red hover:text-white flex items-center justify-center transition"><i class="fa-brands fa-instagram text-sm"></i></a>
+            <a data-cms-href="store_facebook" href="#" class="w-8 h-8 rounded-full bg-gray-800 hover:bg-lince-red hover:text-white flex items-center justify-center transition"><i class="fa-brands fa-facebook-f text-sm"></i></a>
+            <a data-cms-href="store_whatsapp" href="https://wa.me/5511987654321" target="_blank" class="w-8 h-8 rounded-full bg-gray-800 hover:bg-emerald-600 hover:text-white flex items-center justify-center transition"><i class="fa-brands fa-whatsapp text-sm"></i></a>
+          </div>
+        </div>
+
+        <!-- Coluna 2: Navegação -->
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-wider text-amber-300 mb-4">Coleções</h4>
+          <ul class="space-y-2 text-xs text-gray-400">
+            <li><a href="#catalogo" onclick="Catalog.filters.category='armacao_grau'; Catalog.loadProducts();" class="hover:text-white transition">Armações de Grau</a></li>
+            <li><a href="#catalogo" onclick="Catalog.filters.category='oculos_sol'; Catalog.loadProducts();" class="hover:text-white transition">Óculos de Sol Polarizados</a></li>
+            <li><a href="#catalogo" onclick="Catalog.filters.category='lentes_oftalmicas'; Catalog.loadProducts();" class="hover:text-white transition">Lentes BlueProtect</a></li>
+            <li><a href="#catalogo" onclick="Catalog.filters.category='lentes_oftalmicas'; Catalog.loadProducts();" class="hover:text-white transition">Lentes Multifocais HD</a></li>
+            <li><a href="#catalogo" onclick="Catalog.filters.category='lentes_contato'; Catalog.loadProducts();" class="hover:text-white transition">Lentes de Contato</a></li>
+            <li><a href="#catalogo" onclick="Catalog.filters.category='acessorios'; Catalog.loadProducts();" class="hover:text-white transition">Acessórios & Kits</a></li>
+          </ul>
+        </div>
+
+        <!-- Coluna 3: Serviços -->
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-wider text-amber-300 mb-4">Serviços Ópticos</h4>
+          <ul class="space-y-2 text-xs text-gray-400">
+            <li><a href="#simulador" class="hover:text-white transition">Simulador de Montagem</a></li>
+            <li><a href="#visagismo" class="hover:text-white transition">Consultoria de Rosto</a></li>
+            <li><a href="#servicos" class="hover:text-white transition">Laboratório Digital Próprio</a></li>
+            <li><a href="#servicos" class="hover:text-white transition">Ajuste & Manutenção Vitalícia</a></li>
+            <li><a href="/admin" target="_blank" class="text-amber-300 hover:text-white font-bold transition flex items-center gap-1.5"><i class="fa-solid fa-lock text-[10px]"></i> Painel da Ótica (Lojista)</a></li>
+          </ul>
+        </div>
+
+        <!-- Coluna 4: Contato & Unidade -->
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-wider text-amber-300 mb-4">Atendimento</h4>
+          <div class="space-y-2 text-xs text-gray-400 leading-relaxed">
+            <p><i class="fa-solid fa-location-dot text-amber-300 mr-1.5"></i> <span data-cms="store_address">Av. Paulista, 1500 - São Paulo, SP</span></p>
+            <p><i class="fa-solid fa-phone text-amber-300 mr-1.5"></i> <span data-cms="store_phone">(11) 98765-4321</span></p>
+            <p><i class="fa-solid fa-envelope text-amber-300 mr-1.5"></i> <span data-cms="store_email">contato@oticalince.com.br</span></p>
+            <p><i class="fa-solid fa-clock text-amber-300 mr-1.5"></i> <span data-cms="store_hours">Seg a Sex: 09h às 19h | Sáb: 09h às 15h</span></p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Assinatura Final -->
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 gap-4">
+        <div data-cms="footer_copyright">
+          &copy; 2026 Ótica Lince. Todos os direitos reservados.
+        </div>
+        <div class="flex items-center gap-4">
+          <span>CNPJ: <span data-cms="store_cnpj">12.345.678/0001-90</span></span>
+          <span>•</span>
+          <span data-cms="footer_compliance">Em conformidade com a LGPD e Conselho de Óptica</span>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ========================================================
+       WHATSAPP FLUTUANTE
+       ======================================================== -->
+  <a 
+    data-cms-href="store_whatsapp"
+    href="https://wa.me/5511987654321?text=Ol%C3%A1%2C%20%C3%93tica%20Lince!%20Gostaria%20de%20atendimento%20online." 
+    target="_blank" 
+    class="whatsapp-float" 
+    title="Falar com Especialista Ótico no WhatsApp"
+  >
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <!-- ========================================================
+       MODAIS DO SISTEMA
+       ======================================================== -->
+
+  <!-- 1. MODAL DETALHE DO PRODUTO -->
+  <div id="productDetailModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm p-4 modal-overlay overflow-y-auto">
+    <div class="relative w-full max-w-3xl bg-white rounded-3xl p-6 sm:p-8 shadow-2xl modal-content my-8 max-h-[90vh] overflow-y-auto">
+      <button onclick="Catalog.closeProductDetail()" class="absolute top-5 right-5 w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 hover:text-gray-900 flex items-center justify-center transition">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+      <div id="productDetailContent">
+        <!-- Renderizado dinamicamente via catalog.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. MODAL TROCA DE ARMAÇÃO NO SIMULADOR -->
+  <div id="changeFrameModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm p-4 modal-overlay overflow-y-auto">
+    <div class="relative w-full max-w-2xl bg-white rounded-3xl p-6 shadow-2xl modal-content my-8 max-h-[85vh] flex flex-col">
+      <div class="flex items-center justify-between pb-4 border-b border-gray-100 mb-4">
+        <h3 class="font-bold text-gray-900 text-base">Selecione uma Armação de Grau</h3>
+        <button data-close-modal="changeFrameModal" class="text-gray-400 hover:text-gray-700">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+      <div id="changeFrameList" class="space-y-2 overflow-y-auto pr-1 flex-1">
+        <!-- Renderizado dinamicamente -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. MODAL SUCESSO DO ORÇAMENTO (CLIENTE) -->
+  <div id="quoteSuccessModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm p-4 modal-overlay">
+    <div class="relative w-full max-w-md bg-white rounded-3xl p-6 sm:p-8 shadow-2xl modal-content text-center">
+      <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
+        <i class="fa-solid fa-check"></i>
+      </div>
+      <h3 class="text-xl font-bold text-gray-900 mb-1">Orçamento Gerado com Sucesso!</h3>
+      <p class="text-xs text-gray-500 mb-4">Seu orçamento foi salvo em nosso banco de dados óptico com o código:</p>
+      
+      <div class="bg-gray-100 py-2.5 px-4 rounded-xl font-mono text-base font-extrabold text-lince-red mb-6" id="quoteSuccessCode">
+        LINCE-000000
+      </div>
+
+      <div class="space-y-3">
+        <a id="quoteSuccessWhatsAppBtn" href="#" target="_blank" class="block w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition shadow">
+          <i class="fa-brands fa-whatsapp text-base mr-1.5"></i> Abrir no WhatsApp & Falar com Ótica
+        </a>
+        <button data-close-modal="quoteSuccessModal" class="block w-full py-2.5 text-xs text-gray-500 hover:text-gray-800 font-semibold">
+          Fechar Janela
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. MODAL ACESSO NA REDE / CELULAR VIA QR CODE -->
+  <div id="mobileAccessModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm p-4 modal-overlay">
+    <div class="relative w-full max-w-sm bg-white rounded-3xl p-6 sm:p-7 shadow-2xl modal-content text-center">
+      <button data-close-modal="mobileAccessModal" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-400 hover:text-gray-700 flex items-center justify-center transition">
+        <i class="fa-solid fa-xmark text-sm"></i>
+      </button>
+
+      <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center text-xl mx-auto mb-3 border border-amber-200/60 shadow-xs">
+        <i class="fa-solid fa-mobile-screen-button"></i>
+      </div>
+      
+      <h3 class="text-base font-bold text-gray-900 mb-1">Acessar no seu Celular</h3>
+      <p class="text-xs text-gray-500 mb-4">
+        Conecte seu smartphone na <strong>mesma rede Wi-Fi</strong> deste computador e aponte a câmera para o QR Code:
+      </p>
+
+      <!-- Imagem do QR Code gerada dinamicamente -->
+      <div class="bg-gray-50 p-4 rounded-2xl border border-gray-200 inline-block mx-auto mb-4 shadow-inner">
+        <img id="mobileQrImage" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=http://192.168.2.136:3000" alt="QR Code Celular" class="w-44 h-44 rounded-lg object-contain mx-auto">
+      </div>
+
+      <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-left space-y-1.5 text-xs mb-4">
+        <div class="flex items-center justify-between text-[11px] text-gray-500 font-semibold">
+          <span>Endereço na Rede Local:</span>
+          <span class="text-emerald-600 font-bold"><i class="fa-solid fa-wifi mr-1"></i> Wi-Fi Ativo</span>
+        </div>
+        <div>
+          <a id="mobileLinkDisplay" href="http://192.168.2.136:3000" target="_blank" class="font-mono font-bold text-lince-red hover:underline block truncate text-xs">
+            http://192.168.2.136:3000
+          </a>
+        </div>
+        <div class="pt-1 border-t border-slate-200 text-[10px] text-slate-500 flex items-center justify-between">
+          <span>Painel Admin no Celular:</span>
+          <a id="mobileAdminLinkDisplay" href="http://192.168.2.136:3000/admin" target="_blank" class="font-mono text-slate-700 hover:text-black font-semibold">
+            /admin
+          </a>
+        </div>
+      </div>
+
+      <button data-close-modal="mobileAccessModal" class="w-full py-2.5 bg-slate-900 hover:bg-black text-white font-bold text-xs rounded-xl transition shadow">
+        Fechar Janela
+      </button>
+    </div>
+  </div>
+
+  <!-- 5. MODAL DE UPLOAD DE RECEITA MÉDICA PELO CLIENTE NO SITE -->
+  <div id="uploadPrescriptionModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm p-4 modal-overlay overflow-y-auto">
+    <div class="relative w-full max-w-xl bg-white rounded-3xl p-6 sm:p-8 shadow-2xl modal-content my-8">
+      <button data-close-modal="uploadPrescriptionModal" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-400 hover:text-gray-700 flex items-center justify-center transition">
+        <i class="fa-solid fa-xmark text-sm"></i>
+      </button>
+
+      <!-- Cabeçalho do Modal -->
+      <div class="flex items-center gap-3.5 pb-4 border-b border-gray-100 mb-5">
+        <div class="w-12 h-12 bg-red-50 text-lince-red rounded-2xl flex items-center justify-center text-xl shrink-0 border border-red-100 shadow-2xs">
+          <i class="fa-solid fa-file-prescription"></i>
+        </div>
+        <div>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-lince-red bg-red-50 px-2 py-0.5 rounded-full border border-red-100">
+            Laboratório Óptica Lince
+          </span>
+          <h3 class="text-lg font-bold text-gray-900 mt-1">Enviar Receita Médica para Orçamento</h3>
+          <p class="text-xs text-gray-500">Tire uma foto com o celular ou anexe o PDF do seu oftalmologista</p>
+        </div>
+      </div>
+
+      <!-- Formulário de Envio -->
+      <form id="publicPrescriptionUploadForm" class="space-y-4 text-xs" enctype="multipart/form-data">
+        
+        <!-- Campo de Upload com Preview -->
+        <div>
+          <label class="block font-bold text-gray-700 mb-1">
+            Foto da Receita ou Arquivo PDF *
+          </label>
+          <div class="border-2 border-dashed border-red-200 hover:border-lince-red bg-red-50/40 rounded-2xl p-4 text-center cursor-pointer transition relative" onclick="document.getElementById('publicRxFileInput').click()">
+            <input type="file" name="prescription_file" id="publicRxFileInput" accept="image/*,.pdf" required class="hidden">
+            <div id="publicRxFileEmptyState">
+              <i class="fa-solid fa-cloud-arrow-up text-2xl text-lince-red mb-1.5 block"></i>
+              <span class="font-bold text-gray-800 block text-xs">Clique para selecionar a foto ou PDF</span>
+              <span class="text-[11px] text-gray-400">Suporta JPG, PNG, WEBP ou PDF (até 15MB)</span>
+            </div>
+            <div id="publicRxFileSelectedState" class="hidden items-center justify-center gap-3">
+              <img id="publicRxImagePreview" src="" alt="Receita" class="w-14 h-14 object-cover rounded-xl border border-gray-200 hidden">
+              <div id="publicRxPdfIcon" class="w-12 h-12 bg-red-100 text-lince-red rounded-xl flex items-center justify-center text-xl hidden">
+                <i class="fa-solid fa-file-pdf"></i>
+              </div>
+              <div class="text-left">
+                <span id="publicRxFileName" class="font-bold text-gray-900 block truncate max-w-xs text-xs">arquivo.pdf</span>
+                <span class="text-[10px] text-emerald-600 font-bold"><i class="fa-solid fa-circle-check"></i> Arquivo pronto para envio</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-gray-700 mb-1">Seu Nome Completo *</label>
+            <input type="text" name="client_name" id="publicRxName" required placeholder="Ex: Ana Maria Silveira" class="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:border-lince-red outline-none">
+          </div>
+          <div>
+            <label class="block font-bold text-gray-700 mb-1">Seu WhatsApp / Telefone *</label>
+            <input type="tel" name="client_phone" id="publicRxPhone" required placeholder="(11) 98888-7777" class="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:border-lince-red outline-none font-medium">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-gray-700 mb-1">E-mail (Opcional)</label>
+            <input type="email" name="client_email" id="publicRxEmail" placeholder="seu@email.com" class="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:border-lince-red outline-none">
+          </div>
+          <div>
+            <label class="block font-bold text-gray-700 mb-1">Tipo de Lente Preferida (Opcional)</label>
+            <select name="lens_recommendation" id="publicRxLensType" class="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:border-lince-red outline-none">
+              <option value="Consultoria - Indicar a melhor opção">Não tenho certeza, me indiquem a melhor opção</option>
+              <option value="Monofocal com Filtro de Luz Azul (Computador)">Monofocal com Filtro Azul (Trabalho/Telas)</option>
+              <option value="Multifocal HD Digital Freeform">Multifocal Digital (Perto e Longe)</option>
+              <option value="Lentes Fotossensíveis (Escurecem ao Sol)">Fotossensíveis (Escurece no Sol / 2 em 1)</option>
+              <option value="Lentes Ultrafinas Alto Índice (Graus Altos)">Ultrafinas Alto Índice 1.67 / 1.74</option>
+              <option value="Óculos de Sol com Grau Polarizado">Solar com Grau Polarizado</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Seção Opcional: Já sabe o grau? -->
+        <div class="border border-gray-200 rounded-2xl p-3 bg-gray-50/70">
+          <div class="flex items-center justify-between cursor-pointer" onclick="document.getElementById('publicRxOptionalDegrees').classList.toggle('hidden')">
+            <span class="font-bold text-gray-700 flex items-center gap-1.5 text-xs">
+              <i class="fa-solid fa-glasses text-lince-red"></i> Deseja adiantar os graus OD / OE? (Opcional)
+            </span>
+            <i class="fa-solid fa-chevron-down text-gray-400 text-xs"></i>
+          </div>
+          <div id="publicRxOptionalDegrees" class="hidden mt-3 pt-3 border-t border-gray-200 space-y-2">
+            <div class="grid grid-cols-2 gap-3 text-xs">
+              <div>
+                <label class="block font-semibold text-gray-600 mb-0.5">Grau Olho Direito (OD)</label>
+                <input type="number" step="0.25" name="od_spherical" placeholder="-2.00" class="w-full p-2 bg-white border border-gray-200 rounded-lg font-mono text-center">
+              </div>
+              <div>
+                <label class="block font-semibold text-gray-600 mb-0.5">Grau Olho Esquerdo (OE)</label>
+                <input type="number" step="0.25" name="oe_spherical" placeholder="-2.25" class="w-full p-2 bg-white border border-gray-200 rounded-lg font-mono text-center">
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-3 text-xs">
+              <div>
+                <label class="block font-semibold text-gray-600 mb-0.5">Nome do Oftalmologista (Dr/Dra)</label>
+                <input type="text" name="doctor_name" placeholder="Dr(a). Oftalmologista" class="w-full p-2 bg-white border border-gray-200 rounded-lg">
+              </div>
+              <div>
+                <label class="block font-semibold text-gray-600 mb-0.5">CRM do Médico</label>
+                <input type="text" name="crm" placeholder="CRM/SP 12345" class="w-full p-2 bg-white border border-gray-200 rounded-lg">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-gray-700 mb-1">Dúvidas, Armação Desejada ou Observações</label>
+          <textarea name="notes" id="publicRxNotes" rows="2" placeholder="Ex: Gostaria de armação redonda em metal dourado; sinto fadiga visual no computador..." class="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:border-lince-red outline-none"></textarea>
+        </div>
+
+        <button type="submit" id="btnSubmitPublicRx" class="w-full py-3.5 bg-lince-red hover:bg-red-800 text-white font-extrabold rounded-2xl shadow-lg transition flex items-center justify-center gap-2 text-xs uppercase tracking-wider">
+          <i class="fa-solid fa-paper-plane"></i>
+          <span>Enviar Receita para Análise Gratuita</span>
+        </button>
+
+        <p class="text-[11px] text-gray-400 text-center">
+          <i class="fa-solid fa-shield-halved text-emerald-600 mr-1"></i> Seus dados médicos são protegidos e tratados em conformidade com a LGPD.
+        </p>
+      </form>
+
+      <!-- Mensagem de Sucesso (Oculta por padrão) -->
+      <div id="publicRxSuccessView" class="hidden text-center py-6 space-y-4">
+        <div class="w-16 h-16 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center text-2xl mx-auto shadow-sm">
+          <i class="fa-solid fa-check"></i>
+        </div>
+        <div>
+          <h4 class="text-lg font-bold text-gray-900">Receita Enviada com Sucesso!</h4>
+          <p class="text-xs text-gray-500 max-w-sm mx-auto mt-1">
+            Seu arquivo foi anexado ao laboratório da Ótica Lince. Nossos consultores ópticos analisarão sua prescrição e entrarão em contato pelo WhatsApp com as opções ideais de lentes.
+          </p>
+        </div>
+
+        <div class="pt-2 flex flex-col sm:flex-row gap-2 justify-center">
+          <a id="btnPublicRxNotifyWhatsApp" href="#" target="_blank" class="px-5 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl transition flex items-center justify-center gap-2 shadow">
+            <i class="fa-brands fa-whatsapp text-sm"></i>
+            <span>Avisar Também pelo WhatsApp</span>
+          </a>
+          <button type="button" data-close-modal="uploadPrescriptionModal" class="px-5 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-xs rounded-xl transition">
+            Fechar Janela
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Scripts da Aplicação -->
+  <script src="/js/api.js"></script>
+  <script src="/js/siteContent.js"></script>
+  <script src="/js/catalog.js"></script>
+  <script src="/js/simulator.js"></script>
+  <script src="/js/faceGuide.js"></script>
+  <script src="/js/app.js"></script>
+
+</body>
+</html>
+

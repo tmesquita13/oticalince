@@ -1,0 +1,27 @@
+{
+  "name": "otica-lince",
+  "version": "1.0.0",
+  "description": "Sistema completo para ótica: catálogo de armações, lentes, acessórios, gestão de clientes, receitas oftalmológicas e agendamentos.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "otica",
+    "lentes",
+    "armacoes",
+    "oculos",
+    "optometria",
+    "oftalmologia",
+    "gestao-de-clientes"
+  ],
+  "author": "Ótica Lince",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "multer": "^1.4.5-lts.1",
+    "sqlite3": "^6.0.1"
+  }
+}
